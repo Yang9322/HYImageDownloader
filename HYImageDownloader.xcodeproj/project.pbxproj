@@ -14,6 +14,7 @@
 		3BF37B0E1CD5DF96007F46AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37B0D1CD5DF96007F46AD /* Assets.xcassets */; };
 		3BF37B111CD5DF96007F46AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37B0F1CD5DF96007F46AD /* LaunchScreen.storyboard */; };
 		3BF37B1C1CD5DF96007F46AD /* HYImageDownloaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37B1B1CD5DF96007F46AD /* HYImageDownloaderTests.m */; };
+		3BF37B281CD5DFE1007F46AD /* UIImageView+HYImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37B271CD5DFE1007F46AD /* UIImageView+HYImageDownloader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		3BF37B171CD5DF96007F46AD /* HYImageDownloaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HYImageDownloaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BF37B1B1CD5DF96007F46AD /* HYImageDownloaderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HYImageDownloaderTests.m; sourceTree = "<group>"; };
 		3BF37B1D1CD5DF96007F46AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3BF37B261CD5DFE1007F46AD /* UIImageView+HYImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+HYImageDownloader.h"; sourceTree = "<group>"; };
+		3BF37B271CD5DFE1007F46AD /* UIImageView+HYImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+HYImageDownloader.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 				3BF37B051CD5DF96007F46AD /* AppDelegate.m */,
 				3BF37B071CD5DF96007F46AD /* ViewController.h */,
 				3BF37B081CD5DF96007F46AD /* ViewController.m */,
+				3BF37B261CD5DFE1007F46AD /* UIImageView+HYImageDownloader.h */,
+				3BF37B271CD5DFE1007F46AD /* UIImageView+HYImageDownloader.m */,
 				3BF37B0A1CD5DF96007F46AD /* Main.storyboard */,
 				3BF37B0D1CD5DF96007F46AD /* Assets.xcassets */,
 				3BF37B0F1CD5DF96007F46AD /* LaunchScreen.storyboard */,
@@ -211,6 +216,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BF37B281CD5DFE1007F46AD /* UIImageView+HYImageDownloader.m in Sources */,
 				3BF37B091CD5DF96007F46AD /* ViewController.m in Sources */,
 				3BF37B061CD5DF96007F46AD /* AppDelegate.m in Sources */,
 				3BF37B031CD5DF96007F46AD /* main.m in Sources */,
