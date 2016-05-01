@@ -1,0 +1,419 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3BF37B031CD5DF96007F46AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37B021CD5DF96007F46AD /* main.m */; };
+		3BF37B061CD5DF96007F46AD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37B051CD5DF96007F46AD /* AppDelegate.m */; };
+		3BF37B091CD5DF96007F46AD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37B081CD5DF96007F46AD /* ViewController.m */; };
+		3BF37B0C1CD5DF96007F46AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37B0A1CD5DF96007F46AD /* Main.storyboard */; };
+		3BF37B0E1CD5DF96007F46AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37B0D1CD5DF96007F46AD /* Assets.xcassets */; };
+		3BF37B111CD5DF96007F46AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37B0F1CD5DF96007F46AD /* LaunchScreen.storyboard */; };
+		3BF37B1C1CD5DF96007F46AD /* HYImageDownloaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37B1B1CD5DF96007F46AD /* HYImageDownloaderTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3BF37B181CD5DF96007F46AD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3BF37AF61CD5DF96007F46AD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3BF37AFD1CD5DF96007F46AD;
+			remoteInfo = HYImageDownloader;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3BF37AFE1CD5DF96007F46AD /* HYImageDownloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HYImageDownloader.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BF37B021CD5DF96007F46AD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3BF37B041CD5DF96007F46AD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		3BF37B051CD5DF96007F46AD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		3BF37B071CD5DF96007F46AD /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		3BF37B081CD5DF96007F46AD /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		3BF37B0B1CD5DF96007F46AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3BF37B0D1CD5DF96007F46AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3BF37B101CD5DF96007F46AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		3BF37B121CD5DF96007F46AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3BF37B171CD5DF96007F46AD /* HYImageDownloaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HYImageDownloaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BF37B1B1CD5DF96007F46AD /* HYImageDownloaderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HYImageDownloaderTests.m; sourceTree = "<group>"; };
+		3BF37B1D1CD5DF96007F46AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3BF37AFB1CD5DF96007F46AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BF37B141CD5DF96007F46AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3BF37AF51CD5DF96007F46AD = {
+			isa = PBXGroup;
+			children = (
+				3BF37B001CD5DF96007F46AD /* HYImageDownloader */,
+				3BF37B1A1CD5DF96007F46AD /* HYImageDownloaderTests */,
+				3BF37AFF1CD5DF96007F46AD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3BF37AFF1CD5DF96007F46AD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3BF37AFE1CD5DF96007F46AD /* HYImageDownloader.app */,
+				3BF37B171CD5DF96007F46AD /* HYImageDownloaderTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3BF37B001CD5DF96007F46AD /* HYImageDownloader */ = {
+			isa = PBXGroup;
+			children = (
+				3BF37B041CD5DF96007F46AD /* AppDelegate.h */,
+				3BF37B051CD5DF96007F46AD /* AppDelegate.m */,
+				3BF37B071CD5DF96007F46AD /* ViewController.h */,
+				3BF37B081CD5DF96007F46AD /* ViewController.m */,
+				3BF37B0A1CD5DF96007F46AD /* Main.storyboard */,
+				3BF37B0D1CD5DF96007F46AD /* Assets.xcassets */,
+				3BF37B0F1CD5DF96007F46AD /* LaunchScreen.storyboard */,
+				3BF37B121CD5DF96007F46AD /* Info.plist */,
+				3BF37B011CD5DF96007F46AD /* Supporting Files */,
+			);
+			path = HYImageDownloader;
+			sourceTree = "<group>";
+		};
+		3BF37B011CD5DF96007F46AD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3BF37B021CD5DF96007F46AD /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3BF37B1A1CD5DF96007F46AD /* HYImageDownloaderTests */ = {
+			isa = PBXGroup;
+			children = (
+				3BF37B1B1CD5DF96007F46AD /* HYImageDownloaderTests.m */,
+				3BF37B1D1CD5DF96007F46AD /* Info.plist */,
+			);
+			path = HYImageDownloaderTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3BF37AFD1CD5DF96007F46AD /* HYImageDownloader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3BF37B201CD5DF96007F46AD /* Build configuration list for PBXNativeTarget "HYImageDownloader" */;
+			buildPhases = (
+				3BF37AFA1CD5DF96007F46AD /* Sources */,
+				3BF37AFB1CD5DF96007F46AD /* Frameworks */,
+				3BF37AFC1CD5DF96007F46AD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HYImageDownloader;
+			productName = HYImageDownloader;
+			productReference = 3BF37AFE1CD5DF96007F46AD /* HYImageDownloader.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3BF37B161CD5DF96007F46AD /* HYImageDownloaderTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3BF37B231CD5DF96007F46AD /* Build configuration list for PBXNativeTarget "HYImageDownloaderTests" */;
+			buildPhases = (
+				3BF37B131CD5DF96007F46AD /* Sources */,
+				3BF37B141CD5DF96007F46AD /* Frameworks */,
+				3BF37B151CD5DF96007F46AD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3BF37B191CD5DF96007F46AD /* PBXTargetDependency */,
+			);
+			name = HYImageDownloaderTests;
+			productName = HYImageDownloaderTests;
+			productReference = 3BF37B171CD5DF96007F46AD /* HYImageDownloaderTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3BF37AF61CD5DF96007F46AD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "He yang";
+				TargetAttributes = {
+					3BF37AFD1CD5DF96007F46AD = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					3BF37B161CD5DF96007F46AD = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = 3BF37AFD1CD5DF96007F46AD;
+					};
+				};
+			};
+			buildConfigurationList = 3BF37AF91CD5DF96007F46AD /* Build configuration list for PBXProject "HYImageDownloader" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3BF37AF51CD5DF96007F46AD;
+			productRefGroup = 3BF37AFF1CD5DF96007F46AD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3BF37AFD1CD5DF96007F46AD /* HYImageDownloader */,
+				3BF37B161CD5DF96007F46AD /* HYImageDownloaderTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3BF37AFC1CD5DF96007F46AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BF37B111CD5DF96007F46AD /* LaunchScreen.storyboard in Resources */,
+				3BF37B0E1CD5DF96007F46AD /* Assets.xcassets in Resources */,
+				3BF37B0C1CD5DF96007F46AD /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BF37B151CD5DF96007F46AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3BF37AFA1CD5DF96007F46AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BF37B091CD5DF96007F46AD /* ViewController.m in Sources */,
+				3BF37B061CD5DF96007F46AD /* AppDelegate.m in Sources */,
+				3BF37B031CD5DF96007F46AD /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BF37B131CD5DF96007F46AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BF37B1C1CD5DF96007F46AD /* HYImageDownloaderTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3BF37B191CD5DF96007F46AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3BF37AFD1CD5DF96007F46AD /* HYImageDownloader */;
+			targetProxy = 3BF37B181CD5DF96007F46AD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3BF37B0A1CD5DF96007F46AD /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3BF37B0B1CD5DF96007F46AD /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		3BF37B0F1CD5DF96007F46AD /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3BF37B101CD5DF96007F46AD /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3BF37B1E1CD5DF96007F46AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3BF37B1F1CD5DF96007F46AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3BF37B211CD5DF96007F46AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = HYImageDownloader/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = IOS.HYImageDownloader;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3BF37B221CD5DF96007F46AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = HYImageDownloader/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = IOS.HYImageDownloader;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		3BF37B241CD5DF96007F46AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = HYImageDownloaderTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = IOS.HYImageDownloaderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HYImageDownloader.app/HYImageDownloader";
+			};
+			name = Debug;
+		};
+		3BF37B251CD5DF96007F46AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = HYImageDownloaderTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = IOS.HYImageDownloaderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HYImageDownloader.app/HYImageDownloader";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3BF37AF91CD5DF96007F46AD /* Build configuration list for PBXProject "HYImageDownloader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3BF37B1E1CD5DF96007F46AD /* Debug */,
+				3BF37B1F1CD5DF96007F46AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3BF37B201CD5DF96007F46AD /* Build configuration list for PBXNativeTarget "HYImageDownloader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3BF37B211CD5DF96007F46AD /* Debug */,
+				3BF37B221CD5DF96007F46AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		3BF37B231CD5DF96007F46AD /* Build configuration list for PBXNativeTarget "HYImageDownloaderTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3BF37B241CD5DF96007F46AD /* Debug */,
+				3BF37B251CD5DF96007F46AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3BF37AF61CD5DF96007F46AD /* Project object */;
+}
