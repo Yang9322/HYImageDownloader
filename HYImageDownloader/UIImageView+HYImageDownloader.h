@@ -16,4 +16,9 @@
 
 
 - (void)hy_setImageWithURLString:(NSString *)URLString placeHolder:(UIImage *)placeHolder;
+
+
+- (void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder;
+
+
 @end

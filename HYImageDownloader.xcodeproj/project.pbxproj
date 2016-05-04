@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B1AAE681CD9F5E9001ED160 /* 36_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B1AAE671CD9F5E9001ED160 /* 36_2.png */; };
+		3B814E4C1CD6F788004E595B /* HYImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B814E4B1CD6F788004E595B /* HYImageDownloader.m */; };
+		3B814E4F1CD6F86A004E595B /* HYImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B814E4E1CD6F86A004E595B /* HYImageCache.m */; };
 		3BF37B031CD5DF96007F46AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37B021CD5DF96007F46AD /* main.m */; };
 		3BF37B061CD5DF96007F46AD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37B051CD5DF96007F46AD /* AppDelegate.m */; };
 		3BF37B091CD5DF96007F46AD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37B081CD5DF96007F46AD /* ViewController.m */; };
@@ -28,6 +31,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B1AAE671CD9F5E9001ED160 /* 36_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 36_2.png; sourceTree = "<group>"; };
+		3B814E4A1CD6F788004E595B /* HYImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYImageDownloader.h; sourceTree = "<group>"; };
+		3B814E4B1CD6F788004E595B /* HYImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYImageDownloader.m; sourceTree = "<group>"; };
+		3B814E4D1CD6F86A004E595B /* HYImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYImageCache.h; sourceTree = "<group>"; };
+		3B814E4E1CD6F86A004E595B /* HYImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYImageCache.m; sourceTree = "<group>"; };
 		3BF37AFE1CD5DF96007F46AD /* HYImageDownloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HYImageDownloader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BF37B021CD5DF96007F46AD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3BF37B041CD5DF96007F46AD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -90,7 +98,12 @@
 				3BF37B081CD5DF96007F46AD /* ViewController.m */,
 				3BF37B261CD5DFE1007F46AD /* UIImageView+HYImageDownloader.h */,
 				3BF37B271CD5DFE1007F46AD /* UIImageView+HYImageDownloader.m */,
+				3B814E4A1CD6F788004E595B /* HYImageDownloader.h */,
+				3B814E4B1CD6F788004E595B /* HYImageDownloader.m */,
+				3B814E4D1CD6F86A004E595B /* HYImageCache.h */,
+				3B814E4E1CD6F86A004E595B /* HYImageCache.m */,
 				3BF37B0A1CD5DF96007F46AD /* Main.storyboard */,
+				3B1AAE671CD9F5E9001ED160 /* 36_2.png */,
 				3BF37B0D1CD5DF96007F46AD /* Assets.xcassets */,
 				3BF37B0F1CD5DF96007F46AD /* LaunchScreen.storyboard */,
 				3BF37B121CD5DF96007F46AD /* Info.plist */,
@@ -197,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BF37B111CD5DF96007F46AD /* LaunchScreen.storyboard in Resources */,
+				3B1AAE681CD9F5E9001ED160 /* 36_2.png in Resources */,
 				3BF37B0E1CD5DF96007F46AD /* Assets.xcassets in Resources */,
 				3BF37B0C1CD5DF96007F46AD /* Main.storyboard in Resources */,
 			);
@@ -220,6 +234,8 @@
 				3BF37B091CD5DF96007F46AD /* ViewController.m in Sources */,
 				3BF37B061CD5DF96007F46AD /* AppDelegate.m in Sources */,
 				3BF37B031CD5DF96007F46AD /* main.m in Sources */,
+				3B814E4C1CD6F788004E595B /* HYImageDownloader.m in Sources */,
+				3B814E4F1CD6F86A004E595B /* HYImageCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,6 +426,7 @@
 				3BF37B221CD5DF96007F46AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3BF37B231CD5DF96007F46AD /* Build configuration list for PBXNativeTarget "HYImageDownloaderTests" */ = {
 			isa = XCConfigurationList;
@@ -418,6 +435,7 @@
 				3BF37B251CD5DF96007F46AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
