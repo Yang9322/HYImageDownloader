@@ -46,12 +46,14 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         
-        NSLog(@" begin---%@---end",error );
-
+        
     }];
     
    
-    
+    if (receipt) {
+        
+        
+    }
     
 }
 

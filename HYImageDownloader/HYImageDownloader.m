@@ -173,7 +173,16 @@
             case NSURLRequestReturnCacheDataDontLoad:{
                 //尝试从缓存中取图片并调用success
                 
-                
+                UIImage *image = [self.imageCache imageWithKey:URLIdentifier];
+                if (image) {
+                    if (succss) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            succss(URLRequest,nil,image);
+                        });
+                    }
+                 
+                    return;
+                }
                 
             }
                 break;
@@ -193,9 +202,13 @@
                    });
                }else{
                    UIImage *image = [UIImage imageWithData:data];
-                   dispatch_async(dispatch_get_main_queue(), ^{
-                       mergeTask.responseHandler.successBlock(URLRequest,(NSHTTPURLResponse *)response,image);
-                   });
+                   if (image) {
+                       [self.imageCache addImageForKey:URLIdentifier Image:image];
+                       dispatch_async(dispatch_get_main_queue(), ^{
+                           mergeTask.responseHandler.successBlock(URLRequest,(NSHTTPURLResponse *)response,image);
+                       });
+                   }
+               
                    
                }
            }
