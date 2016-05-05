@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,22 +18,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gR5-CD-Whv">
-                                <rect key="frame" x="301" y="213" width="50" height="50"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gR5-CD-Whv">
+                                <rect key="frame" x="275" y="275" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="1JR-eS-pum"/>
                                     <constraint firstAttribute="width" constant="50" id="7cy-gb-JdH"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vdF-TP-Rtq">
+                                <rect key="frame" x="70" y="70" width="47" height="47"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="47" id="6Tb-Ib-EH1"/>
+                                    <constraint firstAttribute="height" constant="47" id="UVD-Dx-V09"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="clicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UHU-YV-rmR"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kNj-wL-wQb">
+                                <rect key="frame" x="6" y="247" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="0G2-xv-Ma2"/>
+                                    <constraint firstAttribute="width" constant="240" id="PK4-QM-OaD"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="vdF-TP-Rtq" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="50" id="1sB-GT-Ctc"/>
                             <constraint firstItem="gR5-CD-Whv" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="2cd-2A-FZp"/>
+                            <constraint firstItem="vdF-TP-Rtq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="50" id="9ei-6N-ZdS"/>
+                            <constraint firstItem="kNj-wL-wQb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="6" id="Omy-iO-3ta"/>
+                            <constraint firstItem="kNj-wL-wQb" firstAttribute="top" secondItem="vdF-TP-Rtq" secondAttribute="bottom" constant="130" id="qdh-Bh-juS"/>
                             <constraint firstItem="gR5-CD-Whv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rz8-xn-qgj"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="imageView0" destination="gR5-CD-Whv" id="gcT-MB-Cnv"/>
+                        <outlet property="imageView1" destination="kNj-wL-wQb" id="6Nl-El-e71"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

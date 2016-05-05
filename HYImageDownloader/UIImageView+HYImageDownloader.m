@@ -9,6 +9,30 @@
 #import "UIImageView+HYImageDownloader.h"
 
 #import "HYImageDownloader.h"
+
+#import "objc/runtime.h"
+
+@interface UIImageView (_HYImageDownloader)
+
+@property (nonatomic,strong)HYImageDownloadReceipt *activeReceipt;
+
+@end
+
+@implementation UIImageView (_HYImageDownloader)
+
+
+-(void)setActiveReceipt:(HYImageDownloadReceipt *)activeReceipt{
+    objc_setAssociatedObject(self, @selector(activeReceipt), activeReceipt, OBJC_ASSOCIATION_RETAIN);
+}
+
+-(HYImageDownloadReceipt *)activeReceipt{
+  return objc_getAssociatedObject(self, @selector(activeReceipt));
+}
+
+@end
+
+
+
 @implementation UIImageView (HYImageDownloader)
 
 - (void)hy_setImageWithURLString:(NSString *)URLString{
@@ -38,7 +62,7 @@
         return;
     }
     
-    //判断该imageView是否已经处于下载状态
+   
     NSUUID *receiptID = [NSUUID UUID];
      HYImageDownloadReceipt *receipt = [[HYImageDownloader shareInstance] downloadImageForURLRequest:request withReceiptID:receiptID success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *responseObject) {
          
@@ -50,10 +74,9 @@
     }];
     
    
-    if (receipt) {
-        
-        
-    }
+    
+    self.activeReceipt = receipt;
+    
     
 }
 

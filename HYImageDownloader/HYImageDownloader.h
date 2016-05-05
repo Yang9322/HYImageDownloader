@@ -32,7 +32,7 @@ typedef NS_ENUM(NSInteger,HYImageDownloadPrioritization){
 
 @property (nonatomic,assign)NSInteger maxDownloadCount;
 
-@property (nonatomic,weak)id <HYImageCache> imageCache;
+@property (nonatomic,strong)id <HYImageCache> imageCache;
 
 
 

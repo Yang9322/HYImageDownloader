@@ -164,6 +164,7 @@
         if (exsitingMergedTask) {
             
             task = exsitingMergedTask.task;
+            
             return;
         }
         
@@ -192,26 +193,35 @@
         }
         
        NSURLSessionDataTask *createdTask = [self.session dataTaskWithRequest:URLRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-           HYImageDownloadMergedTask *mergeTask = self.mergedTasks[URLIdentifier];
-           if (mergeTask) {
-               
-               [self removeMergedTaskWithURLIdentifier:URLRequest.URL.absoluteString];
-               if (error) {
-                   dispatch_async(dispatch_get_main_queue(), ^{
-                       mergeTask.responseHandler.failureBlock(URLRequest,nil,error);
-                   });
-               }else{
-                   UIImage *image = [UIImage imageWithData:data];
-                   if (image) {
-                       [self.imageCache addImageForKey:URLIdentifier Image:image];
+           dispatch_async(self.responseQueue, ^{
+               HYImageDownloadMergedTask *mergeTask = self.mergedTasks[URLIdentifier];
+               if (mergeTask) {
+                   [self removeMergedTaskWithURLIdentifier:URLRequest.URL.absoluteString];
+                   if (error) {
                        dispatch_async(dispatch_get_main_queue(), ^{
-                           mergeTask.responseHandler.successBlock(URLRequest,(NSHTTPURLResponse *)response,image);
+                           mergeTask.responseHandler.failureBlock(URLRequest,nil,error);
                        });
+                   }else{
+                       UIImage *image = [UIImage imageWithData:data];
+                       if (image) {
+                           [self.imageCache addImageForKey:URLIdentifier Image:image];
+                           dispatch_async(dispatch_get_main_queue(), ^{
+                               mergeTask.responseHandler.successBlock(URLRequest,(NSHTTPURLResponse *)response,image);
+                           });
+                       }
+                       
+                       
                    }
-               
+                   dispatch_sync(self.synchronizationQueue, ^{
+                       self.activeTaskCount--;
+                       if (self.queuedTasks.count>0) {
+                           [self chooseTaskToExcute];
+                       }
+                   });
                    
                }
-           }
+           });
+      
           
             
         }];
@@ -222,14 +232,13 @@
         
         self.mergedTasks[URLIdentifier] = mergedTask;
         
-      
         task = mergedTask.task;
-    
+        [self queueOrExcuteTask:mergedTask];
+
     });
     
     if (task) {
         HYImageDownloadReceipt *receipt = [[HYImageDownloadReceipt alloc] initWithReceipt:receiptID sessionTask:task];
-        [task resume];
 
         return receipt;
     }else{
@@ -242,8 +251,46 @@
 - (void)removeMergedTaskWithURLIdentifier:(NSString *)URLIdentifier{
     dispatch_async(self.synchronizationQueue, ^{
         [self.mergedTasks removeObjectForKey:URLIdentifier];
-
     });
+}
+
+
+- (void)queueOrExcuteTask:(HYImageDownloadMergedTask *)mergedTask{
+   dispatch_async(self.synchronizationQueue, ^{
+       if (self.activeTaskCount < self.maxDownloadCount) {
+           [self excuteNextTask:mergedTask];
+          
+       }else{
+           [self.queuedTasks addObject:mergedTask];
+       }
+   });
+
+    
+}
+
+- (void)excuteNextTask:(HYImageDownloadMergedTask *)mergedTask{
+    [mergedTask.task resume];
+    self.activeTaskCount++;
+    
+}
+
+
+- (void)chooseTaskToExcute{
+    switch (self.downloadPrioritization) {
+        case HYImageDownloadFIFO:{
+            
+            HYImageDownloadMergedTask *task = self.queuedTasks[0];
+            [self excuteNextTask:task];
+        }
+            break;
+        case HYImageDownloadFILO:{
+            HYImageDownloadMergedTask *task = [self.queuedTasks lastObject];
+            [self excuteNextTask:task];
+
+        }
+        default:
+            break;
+    }
 }
 
 
