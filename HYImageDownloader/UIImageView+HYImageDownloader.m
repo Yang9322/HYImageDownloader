@@ -41,9 +41,7 @@
 }
 
 - (void)hy_setImageWithURLString:(NSString *)URLString placeHolder:(UIImage *)placeHolder{
-    NSURL *url = [NSURL URLWithString:URLString];
     
-    NSAssert(url, @"URL Must be available!");
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:URLString]];
      [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
@@ -53,6 +51,8 @@
 
 
 -(void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder{
+    
+    
     if (placeHolder) {
         self.image = placeHolder;
     }

@@ -197,15 +197,11 @@
 
 
        NSURLSessionDataTask *createdTask = [self.session dataTaskWithRequest:URLRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-           
-           NSLog(@" begin---%@---end",error );
-
 
            dispatch_async(self.responseQueue, ^{
 
                HYImageDownloadMergedTask *mergeTask = self.mergedTasks[URLIdentifier];
                
-
                if (mergeTask) {
                    [self removeMergedTaskWithURLIdentifier:URLRequest.URL.absoluteString];
                    if (error) {
@@ -216,7 +212,6 @@
                            }
                        });
                    }else{
-//                       NSLog(@" begin---%@---end",@"111" );
 
                        UIImage *image = [UIImage imageWithData:data];
                        if (image) {
@@ -289,7 +284,7 @@
 
 
 - (void)chooseTaskToExcute{
-    if (self.queuedTasks.count <=0) return;
+    if (self.queuedTasks.count <= 0) return;
     
     switch (self.downloadPrioritization) {
         case HYImageDownloadFIFO:{
