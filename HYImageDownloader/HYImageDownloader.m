@@ -38,7 +38,7 @@
 
 @property (nonatomic,strong)NSURLSessionDataTask *task;
 
-@property (nonatomic,strong)HYImageResponseHandler *responseHandler;
+@property (nonatomic,strong)NSMutableArray *responseHandlers;
 
 @end
 
@@ -74,12 +74,12 @@
 
 @implementation HYImageDownloadMergedTask
 
-- (instancetype)initWithURLIdentifier:(NSString *)URLIdentifier UIIDIdentifier:(NSUUID *)UUID task:(NSURLSessionDataTask *)task responseHandlers:(HYImageResponseHandler *)responseHandler{
+- (instancetype)initWithURLIdentifier:(NSString *)URLIdentifier UIIDIdentifier:(NSUUID *)UUID task:(NSURLSessionDataTask *)task responseHandlers:(NSMutableArray *)responseHandlers{
     if (self = [super init]) {
         _URLIdentifier = URLIdentifier;
         _UUIDItendifier = UUID;
         _task = task;
-        _responseHandler = responseHandler;
+        _responseHandlers = responseHandlers;
     }
     return self;
 }
@@ -127,7 +127,7 @@
     if (self = [super init]) {
         self.session = session;
         self.downloadPrioritization = downloadPrioritization;
-        self.maxDownloadCount = maxCounts;
+        self.maxDownloadCount = 4;
         self.imageCache = imageCache;
         self.queuedTasks = [NSMutableArray array];
         self.mergedTasks = [NSMutableDictionary dictionary];
@@ -146,10 +146,12 @@
 
 -(HYImageDownloadReceipt *)downloadImageForURLRequest:(NSURLRequest *)URLRequest withReceiptID:(NSUUID *)receiptID success:(void (^)(NSURLRequest *, NSHTTPURLResponse *, UIImage *))succss failure:(void (^)(NSURLRequest *, NSHTTPURLResponse *, NSError *))failure{
     
+
     __block NSURLSessionDataTask *task = nil;
     
     dispatch_sync(self.synchronizationQueue, ^{
-        NSString *URLIdentifier = URLRequest.URL.absoluteString;
+
+       NSString *URLIdentifier = URLRequest.URL.absoluteString;
         if (!URLIdentifier) {
             if (failure) {
                 NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorBadURL userInfo:nil];
@@ -159,10 +161,11 @@
             }
             return ;
         }
-        
+        //解决URL相同的时候不是同一个task导致回调不一致的问题
         HYImageDownloadMergedTask *exsitingMergedTask = self.mergedTasks[URLIdentifier];
         if (exsitingMergedTask) {
-            
+            HYImageResponseHandler *handler = [[HYImageResponseHandler alloc] initWithUUID:receiptID success:succss failure:failure];
+            [exsitingMergedTask.responseHandlers addObject:handler];
             task = exsitingMergedTask.task;
             
             return;
@@ -191,32 +194,46 @@
             default:
                 break;
         }
-        
+
+
        NSURLSessionDataTask *createdTask = [self.session dataTaskWithRequest:URLRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+           
+           NSLog(@" begin---%@---end",error );
+
+
            dispatch_async(self.responseQueue, ^{
+
                HYImageDownloadMergedTask *mergeTask = self.mergedTasks[URLIdentifier];
+               
+
                if (mergeTask) {
                    [self removeMergedTaskWithURLIdentifier:URLRequest.URL.absoluteString];
                    if (error) {
                        dispatch_async(dispatch_get_main_queue(), ^{
-                           mergeTask.responseHandler.failureBlock(URLRequest,nil,error);
+                           for (HYImageResponseHandler *hander in mergeTask.responseHandlers) {
+                                   hander.failureBlock(URLRequest,nil,error);
+
+                           }
                        });
                    }else{
+//                       NSLog(@" begin---%@---end",@"111" );
+
                        UIImage *image = [UIImage imageWithData:data];
                        if (image) {
                            [self.imageCache addImageForKey:URLIdentifier Image:image];
                            dispatch_async(dispatch_get_main_queue(), ^{
-                               mergeTask.responseHandler.successBlock(URLRequest,(NSHTTPURLResponse *)response,image);
+                        for (HYImageResponseHandler *hander in mergeTask.responseHandlers) {                            hander.successBlock(URLRequest,(NSHTTPURLResponse *)response,image);
+                               }
+
                            });
                        }
                        
                        
                    }
-                   dispatch_sync(self.synchronizationQueue, ^{
+                   dispatch_async(self.synchronizationQueue, ^{
                        self.activeTaskCount--;
-                       if (self.queuedTasks.count>0) {
-                           [self chooseTaskToExcute];
-                       }
+                       [self chooseTaskToExcute];
+                       
                    });
                    
                }
@@ -227,11 +244,9 @@
         }];
         
         HYImageResponseHandler *handler = [[HYImageResponseHandler alloc] initWithUUID:receiptID success:succss failure:failure];
-        
-        HYImageDownloadMergedTask *mergedTask = [[HYImageDownloadMergedTask alloc]initWithURLIdentifier:URLRequest.URL.absoluteString UIIDIdentifier:receiptID task:createdTask responseHandlers:handler];
-        
+        HYImageDownloadMergedTask *mergedTask = [[HYImageDownloadMergedTask alloc]initWithURLIdentifier:URLRequest.URL.absoluteString UIIDIdentifier:receiptID task:createdTask responseHandlers:[NSMutableArray array]];
+        [mergedTask.responseHandlers addObject:handler];
         self.mergedTasks[URLIdentifier] = mergedTask;
-        
         task = mergedTask.task;
         [self queueOrExcuteTask:mergedTask];
 
@@ -243,9 +258,7 @@
         return receipt;
     }else{
         return nil;
-    }
-    
-    
+    } 
 }
 
 - (void)removeMergedTaskWithURLIdentifier:(NSString *)URLIdentifier{
@@ -276,15 +289,19 @@
 
 
 - (void)chooseTaskToExcute{
+    if (self.queuedTasks.count <=0) return;
+    
     switch (self.downloadPrioritization) {
         case HYImageDownloadFIFO:{
             
             HYImageDownloadMergedTask *task = self.queuedTasks[0];
+            [self.queuedTasks removeObject:task];
             [self excuteNextTask:task];
         }
             break;
         case HYImageDownloadFILO:{
             HYImageDownloadMergedTask *task = [self.queuedTasks lastObject];
+            [self.queuedTasks removeObject:task];
             [self excuteNextTask:task];
 
         }

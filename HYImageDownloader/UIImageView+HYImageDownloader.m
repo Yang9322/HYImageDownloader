@@ -43,21 +43,20 @@
 - (void)hy_setImageWithURLString:(NSString *)URLString placeHolder:(UIImage *)placeHolder{
     NSURL *url = [NSURL URLWithString:URLString];
     
-    NSLog(@" begin---%@---end",url );
-
+    NSAssert(url, @"URL Must be available!");
+    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:URLString]];
-    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
     [self hy_setImageWithRequest:request placeHolder:placeHolder];
     
 }
 
 
 -(void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder{
-   //判断request是否有效
     if (placeHolder) {
         self.image = placeHolder;
     }
-
+    //判断request是否有效
     if (!request.URL) {
         return;
     }
@@ -70,7 +69,8 @@
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         
-        
+        NSLog(@" begin---%@---end",error );
+
     }];
     
    
