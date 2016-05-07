@@ -53,31 +53,35 @@
 -(void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder{
     
     
-    if (placeHolder) {
-        self.image = placeHolder;
-    }
+    if (placeHolder) self.image = placeHolder;
     //判断request是否有效
-    if (!request.URL) {
+    if (!request.URL) return;
+    
+    if ([self.activeReceipt.task.originalRequest.URL.absoluteString isEqualToString:request.URL.absoluteString]){
         return;
     }
     
-   
-    NSUUID *receiptID = [NSUUID UUID];
+     NSUUID *receiptID = [NSUUID UUID];
      HYImageDownloadReceipt *receipt = [[HYImageDownloader shareInstance] downloadImageForURLRequest:request withReceiptID:receiptID success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *responseObject) {
          
          self.image = responseObject;
+         [self removeActiveReceipt];
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         
-        NSLog(@" begin---%@---end",error );
+        [self removeActiveReceipt];
 
     }];
-    
-   
-    
     self.activeReceipt = receipt;
     
     
+}
+
+
+- (void)removeActiveReceipt{
+   
+    objc_setAssociatedObject(self, @selector(activeReceipt), nil, OBJC_ASSOCIATION_RETAIN);
+
 }
 
 

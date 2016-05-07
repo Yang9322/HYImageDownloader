@@ -44,4 +44,6 @@ typedef NS_ENUM(NSInteger,HYImageDownloadPrioritization){
                            failure:( void (^)(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error))failure;
 
 
+- (void)cancelTaskWithURLRequest:(NSURLRequest *)URLRequest;
+
 @end

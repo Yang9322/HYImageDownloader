@@ -127,7 +127,7 @@
     if (self = [super init]) {
         self.session = session;
         self.downloadPrioritization = downloadPrioritization;
-        self.maxDownloadCount = 4;
+        self.maxDownloadCount = maxCounts;
         self.imageCache = imageCache;
         self.queuedTasks = [NSMutableArray array];
         self.mergedTasks = [NSMutableDictionary dictionary];
@@ -170,13 +170,11 @@
             
             return;
         }
-        
+        //尝试从缓存中取图片并调用success
         switch (URLRequest.cachePolicy) {
             case NSURLRequestUseProtocolCachePolicy:
             case NSURLRequestReturnCacheDataElseLoad:
             case NSURLRequestReturnCacheDataDontLoad:{
-                //尝试从缓存中取图片并调用success
-                
                 UIImage *image = [self.imageCache imageWithKey:URLIdentifier];
                 if (image) {
                     if (succss) {
@@ -195,8 +193,11 @@
                 break;
         }
 
-
+      //创建新的task
        NSURLSessionDataTask *createdTask = [self.session dataTaskWithRequest:URLRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+
+           
+           NSLog(@" begin---%@---end", [NSThread currentThread] );
 
            dispatch_async(self.responseQueue, ^{
 
@@ -223,7 +224,6 @@
                            });
                        }
                        
-                       
                    }
                    dispatch_async(self.synchronizationQueue, ^{
                        self.activeTaskCount--;
@@ -234,10 +234,8 @@
                }
            });
       
-          
-            
         }];
-        
+        //将task与success和failure的回调进行绑定
         HYImageResponseHandler *handler = [[HYImageResponseHandler alloc] initWithUUID:receiptID success:succss failure:failure];
         HYImageDownloadMergedTask *mergedTask = [[HYImageDownloadMergedTask alloc]initWithURLIdentifier:URLRequest.URL.absoluteString UIIDIdentifier:receiptID task:createdTask responseHandlers:[NSMutableArray array]];
         [mergedTask.responseHandlers addObject:handler];
@@ -254,6 +252,19 @@
     }else{
         return nil;
     } 
+}
+
+-(void)cancelTaskWithURLRequest:(NSURLRequest *)URLRequest{
+    dispatch_async(self.synchronizationQueue, ^{
+        [self.mergedTasks removeObjectForKey:URLRequest.URL.absoluteString];
+        NSMutableArray *cancelledTasksArray = [NSMutableArray array];
+        for (HYImageDownloadMergedTask *task in self.queuedTasks) {
+            if ([task.URLIdentifier isEqualToString:URLRequest.URL.absoluteString]) {
+                [cancelledTasksArray addObject:task];
+            }
+        }
+        [self.queuedTasks removeObjectsInArray:cancelledTasksArray];
+    });
 }
 
 - (void)removeMergedTaskWithURLIdentifier:(NSString *)URLIdentifier{
