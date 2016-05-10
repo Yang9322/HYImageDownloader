@@ -17,7 +17,7 @@
 @implementation HYImageCache
 
 -(instancetype)init{
-    return [self initWithMemoryCapacity:100 * 1024 *1024 preferredMemoryCapacity:60 * 1024 *1024];
+    return [self initWithMemoryCapacity:100 * 1024 * 1024 preferredMemoryCapacity:60 * 1024 * 1024];
 }
 
 -(instancetype)initWithMemoryCapacity:(UInt64)memoryCapacity preferredMemoryCapacity:(UInt64)preferredMemoryCapacity{

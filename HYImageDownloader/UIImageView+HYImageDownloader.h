@@ -10,9 +10,10 @@
 #import <UIKit/UIKit.h>
 
 
-typedef NS_ENUM(NSInteger,HYImageDowloaderOptions) {
-    HYImageDownloaderOptionNone = 0,//Default no option
-    HYImageFadeAnimation = 1,//When download image successfully,add a fade animation to image
+typedef NS_OPTIONS(NSInteger,HYImageDowloaderOptions) {
+    HYImageDownloaderOptionNone = 1 << 0,//Default no option
+    HYImageFadeAnimationOption = 1 << 2,//When download image successfully,add a fade animation to image
+    HYImageRoundedRectOption = 1 << 3, //When download image successfully,clip the imageView with cornerRadius
    //......
 };
 

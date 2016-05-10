@@ -122,8 +122,8 @@ didCompleteWithError:(nullable NSError *)error{
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defulat"];
     }
     NSInteger integer = indexPath.row % 7;
-    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:[UIImage imageNamed:@"36_2"] options:1];
-//    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:array[integer]] placeholderImage:[UIImage imageNamed:@"36_2"]];
+    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:[UIImage imageNamed:@"36_2"] options:HYImageFadeAnimationOption | HYImageRoundedRectOption];
+
     return cell;
 }
 

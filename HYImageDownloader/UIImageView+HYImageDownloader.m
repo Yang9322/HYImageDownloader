@@ -37,7 +37,7 @@
 
 - (void)hy_setImageWithURLString:(NSString *)URLString{
     
-    [self hy_setImageWithURLString:URLString placeHolder:nil options:0];
+    [self hy_setImageWithURLString:URLString placeHolder:nil options:kNilOptions];
 }
 
 - (void)hy_setImageWithURLString:(NSString *)URLString placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions) options{
@@ -63,9 +63,13 @@
      NSUUID *receiptID = [NSUUID UUID];
      HYImageDownloadReceipt *receipt = [[HYImageDownloader shareInstance] downloadImageForURLRequest:request withReceiptID:receiptID success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *responseObject) {
 
-         if (options == 1) {
+         if (options & HYImageFadeAnimationOption) {
              self.alpha = 0;
-             self.image = responseObject;
+             UIImage *resizedImage = responseObject;
+             if (options & HYImageRoundedRectOption) {
+                resizedImage = [self adjustImageIfNeeded:responseObject];
+             }
+             self.image = resizedImage;
              [UIView animateWithDuration:0.25 animations:^{
                  self.alpha = 1;
              }];
@@ -91,6 +95,53 @@
 
 }
 
+
+
+
+//Handle image options
+
+- (UIImage *)adjustImageIfNeeded:(UIImage *)image{
+    if (self.bounds.size.width<= 0 || self.bounds.size.height <= 0 ) {
+        return nil;
+    }
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.opaque, 0);
+
+    UIImage *resizedImage  = nil;
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextAddPath(context, [self path]);
+    CGContextClip(context);
+    if (image && image.size.height && image.size.width){
+        //ScaleAspectFill模式
+        CGPoint center   = CGPointMake(self.bounds.size.width * .5f, self.bounds.size.height * .5f);
+        //哪个小按哪个缩
+        CGFloat scaleW   = image.size.width  / self.bounds.size.width;
+        CGFloat scaleH   = image.size.height / self.bounds.size.height;
+        CGFloat scale    = scaleW < scaleH ? scaleW : scaleH;
+        CGSize  size     = CGSizeMake(image.size.width / scale, image.size.height / scale);
+        CGRect  drawRect = CGRectWithCenterAndSize(center, size);
+        CGContextTranslateCTM(context, 0, self.bounds.size.height);
+        CGContextScaleCTM(context, 1.0, -1.0);
+        CGContextDrawImage(context, drawRect, image.CGImage);
+        
+        resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+        
+        
+    }
+    UIGraphicsEndImageContext();
+
+    return resizedImage;
+
+}
+
+- (CGPathRef)path
+{
+    return [[UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                       cornerRadius:CGRectGetWidth(self.bounds) / 2] CGPath];
+}
+
+CGRect CGRectWithCenterAndSize(CGPoint center, CGSize size){
+    return CGRectMake(center.x - (size.width/2), center.y - (size.height/2), size.width, size.height);
+}
 
 
 
