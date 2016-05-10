@@ -46,12 +46,12 @@ didCompleteWithError:(nullable NSError *)error{
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    NSURLSession *ssion = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
-
-    NSURLSessionDataTask *task = [ssion dataTaskWithURL:[NSURL URLWithString:@"ttp://b.hiphotos.baidu.com/image/h%3D200/sign=52b5924e8b5494ee982208191df4e0e1/c2fdfc039245d6887554a155a3c27d1ed31b24e8.jpg"]];
-    [task resume];
-    
-    return;
+//    NSURLSession *ssion = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
+//
+//    NSURLSessionDataTask *task = [ssion dataTaskWithURL:[NSURL URLWithString:@"ttp://b.hiphotos.baidu.com/image/h%3D200/sign=52b5924e8b5494ee982208191df4e0e1/c2fdfc039245d6887554a155a3c27d1ed31b24e8.jpg"]];
+//    [task resume];
+//    
+//    return;
     NSString *str = @"http://b.hiphotos.baidu.com/image/h%3D200/sign=52b5924e8b5494ee982208191df4e0e1/c2fdfc039245d6887554a155a3c27d1ed31b24e8.jpg";
     NSString *str2 = @"http://g.hiphotos.baidu.com/image/h%3D200/sign=70676361b41c8701c9b6b5e6177e9e6e/8644ebf81a4c510f87ed3f9f6759252dd42aa50e.jpg";
     NSString *str3 = @"http://e.hiphotos.baidu.com/image/h%3D200/sign=3ef3e55ee7fe9925d40c6e5004a95ee4/8694a4c27d1ed21b0a2ed37eaa6eddc450da3f41.jpg";
@@ -122,7 +122,7 @@ didCompleteWithError:(nullable NSError *)error{
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defulat"];
     }
     NSInteger integer = indexPath.row % 7;
-    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:[UIImage imageNamed:@"36_2"]];
+    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:[UIImage imageNamed:@"36_2"] options:1];
 //    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:array[integer]] placeholderImage:[UIImage imageNamed:@"36_2"]];
     return cell;
 }

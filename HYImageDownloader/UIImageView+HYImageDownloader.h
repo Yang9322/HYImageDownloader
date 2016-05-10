@@ -9,16 +9,23 @@
 
 #import <UIKit/UIKit.h>
 
+
+typedef NS_ENUM(NSInteger,HYImageDowloaderOptions) {
+    HYImageDownloaderOptionNone = 0,//Default no option
+    HYImageFadeAnimation = 1,//When download image successfully,add a fade animation to image
+   //......
+};
+
 @interface UIImageView (HYImageDownloader)
 
 
 - (void)hy_setImageWithURLString:(NSString *)URLString;
 
 
-- (void)hy_setImageWithURLString:(NSString *)URLString placeHolder:(UIImage *)placeHolder;
+- (void)hy_setImageWithURLString:(NSString *)URLString placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions) options;
 
 
-- (void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder;
+- (void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions) options;
 
 
 @end

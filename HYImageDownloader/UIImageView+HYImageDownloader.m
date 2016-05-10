@@ -37,21 +37,20 @@
 
 - (void)hy_setImageWithURLString:(NSString *)URLString{
     
-    [self hy_setImageWithURLString:URLString placeHolder:nil];
+    [self hy_setImageWithURLString:URLString placeHolder:nil options:0];
 }
 
-- (void)hy_setImageWithURLString:(NSString *)URLString placeHolder:(UIImage *)placeHolder{
-    
+- (void)hy_setImageWithURLString:(NSString *)URLString placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions) options{
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:URLString]];
      [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
-    [self hy_setImageWithRequest:request placeHolder:placeHolder];
+    
+    [self hy_setImageWithRequest:request placeHolder:placeHolder options:options];
     
 }
 
 
--(void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder{
-    
+- (void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions) options{
     
     if (placeHolder) self.image = placeHolder;
     //判断request是否有效
@@ -63,8 +62,16 @@
     
      NSUUID *receiptID = [NSUUID UUID];
      HYImageDownloadReceipt *receipt = [[HYImageDownloader shareInstance] downloadImageForURLRequest:request withReceiptID:receiptID success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *responseObject) {
-         
-         self.image = responseObject;
+
+         if (options == 1) {
+             self.alpha = 0;
+             self.image = responseObject;
+             [UIView animateWithDuration:0.25 animations:^{
+                 self.alpha = 1;
+             }];
+         }else{
+             self.image = responseObject;
+         }
          [self removeActiveReceipt];
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
