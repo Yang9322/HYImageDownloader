@@ -39,9 +39,9 @@ typedef NS_ENUM(NSInteger,HYImageDownloadPrioritization){
 + (instancetype)shareInstance;
 
 - (HYImageDownloadReceipt *)downloadImageForURLRequest:(NSURLRequest *)URLRequest
-                     withReceiptID:(NSUUID *)receiptID
-                           success:(void (^) (NSURLRequest *request ,NSHTTPURLResponse *response,UIImage *responseObject))succss
-                           failure:( void (^)(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error))failure;
+                                         withReceiptID:(NSUUID *)receiptID
+                                               success:(void (^) (NSURLRequest *request ,NSHTTPURLResponse *response,UIImage *responseObject))succss
+                                               failure:( void (^)(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error))failure;
 
 
 - (void)cancelTaskWithURLRequest:(NSURLRequest *)URLRequest;
