@@ -200,6 +200,7 @@
            NSLog(@" begin---%@---end", [NSThread currentThread] );
 
            dispatch_async(self.responseQueue, ^{
+               NSLog(@" begin---%@---end", [NSThread currentThread] );
 
                HYImageDownloadMergedTask *mergeTask = self.mergedTasks[URLIdentifier];
                

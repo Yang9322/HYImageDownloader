@@ -55,6 +55,11 @@
     });
 }
 
+- (void)removeAllImage{
+    dispatch_barrier_sync(_synchorinizationQueye, ^{
+        [self.cachedImages removeAllObjects];
+    });
+}
 
 
 @end

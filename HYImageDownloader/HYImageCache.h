@@ -16,6 +16,8 @@
 
 - (void)removeImageForKey:(NSString *)URLIdentifier;
 
+- (void)removeAllImage;
+
 
 @end
 

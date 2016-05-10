@@ -22,7 +22,7 @@
 
 
 -(void)setActiveReceipt:(HYImageDownloadReceipt *)activeReceipt{
-    objc_setAssociatedObject(self, @selector(activeReceipt), activeReceipt, OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, @selector(activeReceipt), activeReceipt, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 -(HYImageDownloadReceipt *)activeReceipt{
@@ -80,7 +80,7 @@
 
 - (void)removeActiveReceipt{
    
-    objc_setAssociatedObject(self, @selector(activeReceipt), nil, OBJC_ASSOCIATION_RETAIN);
+    self.activeReceipt = nil;
 
 }
 
