@@ -88,6 +88,15 @@
     
 }
 
+-(void)cancelImageDownloadTask{
+    if (self.activeReceipt) {
+        
+        [[HYImageDownloader shareInstance] cancelTaskWithReceipt:self.activeReceipt];
+        self.activeReceipt = nil;
+    }
+    
+}
+
 
 - (void)removeActiveReceipt{
    
@@ -98,7 +107,7 @@
 
 
 
-//Handle image options
+#pragma mark HYImageRoundedRectOption
 
 - (UIImage *)adjustImageIfNeeded:(UIImage *)image{
     if (self.bounds.size.width<= 0 || self.bounds.size.height <= 0 ) {
@@ -111,20 +120,20 @@
     CGContextAddPath(context, [self path]);
     CGContextClip(context);
     if (image && image.size.height && image.size.width){
-        //ScaleAspectFill模式
+        //ScaleAspectFill
         CGPoint center   = CGPointMake(self.bounds.size.width * .5f, self.bounds.size.height * .5f);
-        //哪个小按哪个缩
+        //Judge which is smaller,then shrink it
         CGFloat scaleW   = image.size.width  / self.bounds.size.width;
         CGFloat scaleH   = image.size.height / self.bounds.size.height;
         CGFloat scale    = scaleW < scaleH ? scaleW : scaleH;
         CGSize  size     = CGSizeMake(image.size.width / scale, image.size.height / scale);
         CGRect  drawRect = CGRectWithCenterAndSize(center, size);
+
         CGContextTranslateCTM(context, 0, self.bounds.size.height);
         CGContextScaleCTM(context, 1.0, -1.0);
         CGContextDrawImage(context, drawRect, image.CGImage);
         
         resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-        
         
     }
     UIGraphicsEndImageContext();
@@ -140,6 +149,7 @@
 }
 
 CGRect CGRectWithCenterAndSize(CGPoint center, CGSize size){
+
     return CGRectMake(center.x - (size.width/2), center.y - (size.height/2), size.width, size.height);
 }
 

@@ -268,6 +268,39 @@
     });
 }
 
+
+-(void)cancelTaskWithReceipt:(HYImageDownloadReceipt *)receipt{
+    dispatch_sync(self.synchronizationQueue, ^{
+        NSString *URLIdentifier = receipt.task.originalRequest.URL.absoluteString;
+        HYImageDownloadMergedTask *mergedTask = self.mergedTasks[URLIdentifier];
+        NSInteger index;
+        if (mergedTask) {
+            index = [mergedTask.responseHandlers indexOfObjectPassingTest:^BOOL(HYImageResponseHandler *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                return  obj.uuid = receipt.receipitID;
+            }];
+        }
+        if (index != NSNotFound) {
+            HYImageResponseHandler *handler = mergedTask.responseHandlers[index];
+            [mergedTask.responseHandlers removeObject:handler];
+            NSString *failureString = [NSString stringWithFormat:@"Cancel the task with URLRequest %@",URLIdentifier];
+            NSDictionary *userInfo = @{NSLocalizedFailureReasonErrorKey:failureString};
+            NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorCancelled userInfo:userInfo];
+            if (handler.failureBlock) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    handler.failureBlock(receipt.task.originalRequest,nil,error);
+                });
+            }
+            
+            if (mergedTask.responseHandlers.count == 0 && mergedTask.task.state == NSURLSessionTaskStateSuspended) {
+                [mergedTask.task cancel];
+                [self.mergedTasks removeObjectForKey:URLIdentifier];
+            }
+            
+        }
+    });
+ 
+}
+
 - (void)removeMergedTaskWithURLIdentifier:(NSString *)URLIdentifier{
     dispatch_async(self.synchronizationQueue, ^{
         [self.mergedTasks removeObjectForKey:URLIdentifier];

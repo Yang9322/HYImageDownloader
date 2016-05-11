@@ -46,7 +46,7 @@ typedef NS_ENUM(NSInteger,HYImageDownloadPrioritization){
 
 - (void)cancelTaskWithURLRequest:(NSURLRequest *)URLRequest;
 
-
+- (void)cancelTaskWithReceipt:(HYImageDownloadReceipt *)receipt;
 
 
 @end
