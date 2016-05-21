@@ -85,25 +85,7 @@ didCompleteWithError:(nullable NSError *)error{
    name = [NSString stringWithFormat:@"com.heyang.imagedownloader.concurrentQueue-%@", [[NSUUID UUID] UUIDString]];
     self.concurrentQueue = dispatch_queue_create([name cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_CONCURRENT);
     
-    
-    dispatch_sync(self.concurrentQueue, ^{
-        NSLog(@" begin---1->%@---end", [NSThread currentThread] );
-        dispatch_sync(self.synchronizationQueue, ^{
-            
-            
-            NSLog(@" begin---2->%@---end", [NSThread currentThread] );
-            
-            
-        });
-        
-        
-    });
-    
-    
-    NSLog(@" begin---%@---end",@"123" );
 
-
-    
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -120,16 +102,25 @@ didCompleteWithError:(nullable NSError *)error{
     UITableViewCell *cell =[tableView dequeueReusableCellWithIdentifier:@"defulat"];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defulat"];
+        [cell addObserver:self forKeyPath:@"contentView.frame" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+          cell.imageView.frame = CGRectMake(0, 0, cell.contentView.frame.size.height, cell.contentView.frame.size.height);
+        
     }
     NSInteger integer = indexPath.row % 7;
-    cell.imageView.frame = CGRectMake(0, 0, cell.contentView.frame.size.height, cell.contentView.frame.size.height);
-    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:nil options:HYImageFadeAnimationOption | HYImageRoundedRectOption];
+    
+  
+    cell.imageView.backgroundColor = [UIColor whiteColor];
+    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:[UIImage imageNamed:@"timeline_image_placeholder"] options:HYImageFadeAnimationOption | HYImageRoundedRectOption];
 
     return cell;
 }
 
 
-
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
+    
+    NSLog(@" begin---%@---end",change);
+ 
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

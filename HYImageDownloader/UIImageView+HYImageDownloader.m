@@ -52,10 +52,25 @@
 
 - (void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions) options{
     
+    if (!self.backgroundColor) {
+        self.backgroundColor = [UIColor clearColor];
+    }
+    
+    
     if (placeHolder) {
-        self.image= [self adjustImageIfNeeded:placeHolder];
+        if (options & HYImageRoundedRectOption) {
+            self.image = [self adjustImageIfNeeded:placeHolder];
+        }else{
+            self.image = placeHolder;
+
+        }
+
     }else{
-        self.image = [self adjustImageIfNeeded:[UIImage imageNamed:@"skin_top_background"]];
+        if (options & HYImageRoundedRectOption) {
+            self.image =[self adjustImageIfNeeded:[UIImage imageNamed:@"timeline_image_placeholder"]];
+        }else{
+            self.image = [UIImage imageNamed:@"timeline_image_placeholder"];
+        }
     }
     //判断request是否有效
     if (!request.URL) return;
@@ -117,7 +132,7 @@
     if (self.bounds.size.width<= 0 || self.bounds.size.height <= 0 ) {
         return nil;
     }
-    UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.opaque, 0);
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, 0, 0);
 
     UIImage *resizedImage  = nil;
     CGContextRef context = UIGraphicsGetCurrentContext();

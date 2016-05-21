@@ -196,11 +196,7 @@
       //创建新的task
        NSURLSessionDataTask *createdTask = [self.session dataTaskWithRequest:URLRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 
-           
-           NSLog(@" begin---%@---end", [NSThread currentThread] );
-
            dispatch_async(self.responseQueue, ^{
-               NSLog(@" begin---%@---end", [NSThread currentThread] );
 
                HYImageDownloadMergedTask *mergeTask = self.mergedTasks[URLIdentifier];
                
