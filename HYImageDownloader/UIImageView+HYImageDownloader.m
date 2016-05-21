@@ -52,7 +52,11 @@
 
 - (void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions) options{
     
-    if (placeHolder) self.image = placeHolder;
+    if (placeHolder) {
+        self.image= [self adjustImageIfNeeded:placeHolder];
+    }else{
+        self.image = [self adjustImageIfNeeded:[UIImage imageNamed:@"skin_top_background"]];
+    }
     //判断request是否有效
     if (!request.URL) return;
     
