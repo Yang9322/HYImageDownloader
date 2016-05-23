@@ -103,7 +103,8 @@ didCompleteWithError:(nullable NSError *)error{
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defulat"];
         [cell addObserver:self forKeyPath:@"contentView.frame" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-          cell.imageView.frame = CGRectMake(0, 0, cell.contentView.frame.size.height, cell.contentView.frame.size.height);
+        
+        cell.imageView.frame = CGRectMake(0, 0, cell.contentView.frame.size.height, cell.contentView.frame.size.height);
         
     }
     NSInteger integer = indexPath.row % 7;
