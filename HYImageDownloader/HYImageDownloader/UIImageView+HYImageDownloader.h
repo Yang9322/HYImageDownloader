@@ -12,8 +12,8 @@
 
 typedef NS_OPTIONS(NSInteger,HYImageDowloaderOptions) {
     HYImageDownloaderOptionNone = 1 << 0,//Default no option
-    HYImageFadeAnimationOption = 1 << 2,//When download image successfully,add a fade animation to image
-    HYImageRoundedRectOption = 1 << 3, //When download image successfully,clip the imageView with cornerRadius
+    HYImageFadeAnimationOption = 1 << 1,//When download image successfully,add a fade animation to image
+    HYImageRoundedRectOption = 1 << 2, //When download image successfully,clip the imageView with cornerRadius
    //To be continued ...
 };
 
