@@ -17,7 +17,10 @@
 		3BF37B0E1CD5DF96007F46AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37B0D1CD5DF96007F46AD /* Assets.xcassets */; };
 		3BF37B111CD5DF96007F46AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37B0F1CD5DF96007F46AD /* LaunchScreen.storyboard */; };
 		3BF37B1C1CD5DF96007F46AD /* HYImageDownloaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37B1B1CD5DF96007F46AD /* HYImageDownloaderTests.m */; };
-		632A12B91CF2A304000F4E25 /* HYImageDownloader in Resources */ = {isa = PBXBuildFile; fileRef = 632A12B81CF2A304000F4E25 /* HYImageDownloader */; };
+		635BB6D01CF2B0630080B0D2 /* HYImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 635BB6CA1CF2B0630080B0D2 /* HYImageCache.m */; };
+		635BB6D11CF2B0630080B0D2 /* HYImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 635BB6CC1CF2B0630080B0D2 /* HYImageDownloader.m */; };
+		635BB6D21CF2B0630080B0D2 /* Images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 635BB6CD1CF2B0630080B0D2 /* Images.bundle */; };
+		635BB6D31CF2B0630080B0D2 /* UIImageView+HYImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 635BB6CF1CF2B0630080B0D2 /* UIImageView+HYImageDownloader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +51,13 @@
 		3BF37B171CD5DF96007F46AD /* HYImageDownloaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HYImageDownloaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BF37B1B1CD5DF96007F46AD /* HYImageDownloaderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HYImageDownloaderTests.m; sourceTree = "<group>"; };
 		3BF37B1D1CD5DF96007F46AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		632A12B81CF2A304000F4E25 /* HYImageDownloader */ = {isa = PBXFileReference; lastKnownFileType = folder; path = HYImageDownloader; sourceTree = "<group>"; };
+		635BB6C91CF2B0630080B0D2 /* HYImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HYImageCache.h; path = HYImageDownloader/HYImageCache.h; sourceTree = "<group>"; };
+		635BB6CA1CF2B0630080B0D2 /* HYImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HYImageCache.m; path = HYImageDownloader/HYImageCache.m; sourceTree = "<group>"; };
+		635BB6CB1CF2B0630080B0D2 /* HYImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HYImageDownloader.h; path = HYImageDownloader/HYImageDownloader.h; sourceTree = "<group>"; };
+		635BB6CC1CF2B0630080B0D2 /* HYImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HYImageDownloader.m; path = HYImageDownloader/HYImageDownloader.m; sourceTree = "<group>"; };
+		635BB6CD1CF2B0630080B0D2 /* Images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "Images\U0010\U0010\U0010\U0010\U0010\U0010.bundle"; path = "HYImageDownloader/Images\U0010\U0010\U0010\U0010\U0010\U0010.bundle"; sourceTree = "<group>"; };
+		635BB6CE1CF2B0630080B0D2 /* UIImageView+HYImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+HYImageDownloader.h"; path = "HYImageDownloader/UIImageView+HYImageDownloader.h"; sourceTree = "<group>"; };
+		635BB6CF1CF2B0630080B0D2 /* UIImageView+HYImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+HYImageDownloader.m"; path = "HYImageDownloader/UIImageView+HYImageDownloader.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,13 +99,13 @@
 		3BF37B001CD5DF96007F46AD /* HYImageDownloader */ = {
 			isa = PBXGroup;
 			children = (
-				632A12B81CF2A304000F4E25 /* HYImageDownloader */,
 				3BF37B041CD5DF96007F46AD /* AppDelegate.h */,
 				3BF37B051CD5DF96007F46AD /* AppDelegate.m */,
 				3BF37B071CD5DF96007F46AD /* ViewController.h */,
 				3BF37B081CD5DF96007F46AD /* ViewController.m */,
 				3BE5F2DA1CDB7980003617CE /* HYFPSLabel.h */,
 				3BE5F2DB1CDB7980003617CE /* HYFPSLabel.m */,
+				635BB6D41CF2B1180080B0D2 /* HYImageDownloader */,
 				3BF37B0A1CD5DF96007F46AD /* Main.storyboard */,
 				3B2083E31CF04EBB00EB80D5 /* timeline_image_placeholder.png */,
 				3B2083E11CF041B400EB80D5 /* skin_top_background@2x.png */,
@@ -123,6 +132,20 @@
 				3BF37B1D1CD5DF96007F46AD /* Info.plist */,
 			);
 			path = HYImageDownloaderTests;
+			sourceTree = "<group>";
+		};
+		635BB6D41CF2B1180080B0D2 /* HYImageDownloader */ = {
+			isa = PBXGroup;
+			children = (
+				635BB6C91CF2B0630080B0D2 /* HYImageCache.h */,
+				635BB6CA1CF2B0630080B0D2 /* HYImageCache.m */,
+				635BB6CB1CF2B0630080B0D2 /* HYImageDownloader.h */,
+				635BB6CC1CF2B0630080B0D2 /* HYImageDownloader.m */,
+				635BB6CD1CF2B0630080B0D2 /* Images.bundle */,
+				635BB6CE1CF2B0630080B0D2 /* UIImageView+HYImageDownloader.h */,
+				635BB6CF1CF2B0630080B0D2 /* UIImageView+HYImageDownloader.m */,
+			);
+			name = HYImageDownloader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -205,12 +228,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				632A12B91CF2A304000F4E25 /* HYImageDownloader in Resources */,
 				3BF37B111CD5DF96007F46AD /* LaunchScreen.storyboard in Resources */,
 				3B2083E21CF041B400EB80D5 /* skin_top_background@2x.png in Resources */,
 				3BF37B0E1CD5DF96007F46AD /* Assets.xcassets in Resources */,
 				3B2083E41CF04EBB00EB80D5 /* timeline_image_placeholder.png in Resources */,
 				3BF37B0C1CD5DF96007F46AD /* Main.storyboard in Resources */,
+				635BB6D21CF2B0630080B0D2 /* Images.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,9 +252,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BF37B091CD5DF96007F46AD /* ViewController.m in Sources */,
+				635BB6D11CF2B0630080B0D2 /* HYImageDownloader.m in Sources */,
 				3BE5F2DC1CDB7980003617CE /* HYFPSLabel.m in Sources */,
 				3BF37B061CD5DF96007F46AD /* AppDelegate.m in Sources */,
+				635BB6D31CF2B0630080B0D2 /* UIImageView+HYImageDownloader.m in Sources */,
 				3BF37B031CD5DF96007F46AD /* main.m in Sources */,
+				635BB6D01CF2B0630080B0D2 /* HYImageCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

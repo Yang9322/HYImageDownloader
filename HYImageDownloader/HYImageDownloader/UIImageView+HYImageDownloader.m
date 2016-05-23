@@ -58,7 +58,7 @@
     
     
     if (placeHolder) {
-        if (options & HYImageRoundedRectOption) {
+        if (options & HYImageDowloaderOptionRoundedRect) {
             self.image = [self adjustImageIfNeeded:placeHolder];
         }else{
             self.image = placeHolder;
@@ -66,7 +66,7 @@
         }
 
     }else{
-        if (options & HYImageRoundedRectOption) {
+        if (options & HYImageDowloaderOptionRoundedRect) {
             self.image =[self adjustImageIfNeeded:[UIImage imageNamed:@"timeline_image_placeholder"]];
         }else{
             self.image = [UIImage imageNamed:@"timeline_image_placeholder"];
@@ -82,10 +82,10 @@
      NSUUID *receiptID = [NSUUID UUID];
      HYImageDownloadReceipt *receipt = [[HYImageDownloader shareInstance] downloadImageForURLRequest:request withReceiptID:receiptID success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *responseObject) {
 
-         if (options & HYImageFadeAnimationOption) {
+         if (options & HYImageDowloaderOptionFadeAnimation) {
              self.alpha = 0;
              UIImage *resizedImage = responseObject;
-             if (options & HYImageRoundedRectOption) {
+             if (options & HYImageDowloaderOptionFadeAnimation) {
                 resizedImage = [self adjustImageIfNeeded:responseObject];
              }
              self.image = resizedImage;

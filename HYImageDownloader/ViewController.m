@@ -110,7 +110,7 @@ didCompleteWithError:(nullable NSError *)error{
     
   
     cell.imageView.backgroundColor = [UIColor whiteColor];
-    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:[UIImage imageNamed:@"timeline_image_placeholder"] options:HYImageFadeAnimationOption | HYImageRoundedRectOption];
+    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:[UIImage imageNamed:@"timeline_image_placeholder"] options:HYImageDowloaderOptionFadeAnimation | HYImageDowloaderOptionRoundedRect];
 
     return cell;
 }
