@@ -140,12 +140,12 @@
     CGContextClip(context);
     if (image && image.size.height && image.size.width){
         //ScaleAspectFill
-        CGPoint center   = CGPointMake(self.bounds.size.width * .5f, self.bounds.size.height * .5f);
+        CGPoint center = CGPointMake(self.bounds.size.width * .5f, self.bounds.size.height * .5f);
         //Judge which is smaller,then shrink it
-        CGFloat scaleW   = image.size.width  / self.bounds.size.width;
-        CGFloat scaleH   = image.size.height / self.bounds.size.height;
-        CGFloat scale    = scaleW < scaleH ? scaleW : scaleH;
-        CGSize  size     = CGSizeMake(image.size.width / scale, image.size.height / scale);
+        CGFloat scaleW = image.size.width  / self.bounds.size.width;
+        CGFloat scaleH = image.size.height / self.bounds.size.height;
+        CGFloat scale = scaleW < scaleH ? scaleW : scaleH;
+        CGSize  size = CGSizeMake(image.size.width / scale, image.size.height / scale);
         CGRect  drawRect = CGRectWithCenterAndSize(center, size);
 
         CGContextTranslateCTM(context, 0, self.bounds.size.height);
@@ -169,7 +169,7 @@
 
 CGRect CGRectWithCenterAndSize(CGPoint center, CGSize size){
 
-    return CGRectMake(center.x - (size.width/2), center.y - (size.height/2), size.width, size.height);
+    return CGRectMake(center.x - (size.width / 2), center.y - (size.height / 2), size.width, size.height);
 }
 
 

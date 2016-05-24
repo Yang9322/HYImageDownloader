@@ -16,6 +16,8 @@
 
 @implementation HYImageCache
 
+
+//  为了后续的磁盘缓存做准备
 -(instancetype)init{
     return [self initWithMemoryCapacity:100 * 1024 * 1024 preferredMemoryCapacity:60 * 1024 * 1024];
 }
