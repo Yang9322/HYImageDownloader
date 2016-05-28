@@ -102,8 +102,6 @@
 
 - (instancetype)init{
     NSURLSessionConfiguration *defaultConfiguration = [NSURLSessionConfiguration  defaultSessionConfiguration];
-//   HTTPShouldSetCookies defult is YES
-//    defaultConfiguration.HTTPShouldSetCookies = YES;
     defaultConfiguration.HTTPShouldUsePipelining = NO;
     defaultConfiguration.requestCachePolicy = NSURLRequestUseProtocolCachePolicy;
     defaultConfiguration.allowsCellularAccess = YES;
@@ -117,7 +115,6 @@
                  maxActiveDownloadsCount:4
                              imageCache:[[HYImageCache alloc] init]];
 
-    
 }
 
 
@@ -244,7 +241,6 @@
     
     if (task) {
         HYImageDownloadReceipt *receipt = [[HYImageDownloadReceipt alloc] initWithReceipt:receiptID sessionTask:task];
-
         return receipt;
     }else{
         return nil;

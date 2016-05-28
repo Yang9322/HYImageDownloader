@@ -73,16 +73,12 @@ didCompleteWithError:(nullable NSError *)error{
     label.center = CGPointMake([UIScreen mainScreen].bounds.size.width - 40, [UIScreen mainScreen].bounds.size.height - 20);
     [self.view addSubview:label];
     
-    NSMutableArray *ayy = [NSMutableArray array];
-    dic = [NSMutableDictionary dictionary];
-    dic[@"param"] = ayy;
-    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
     NSString *name = [NSString stringWithFormat:@"com.heyang.imagedownloader.synchronizationqueue-%@", [[NSUUID UUID] UUIDString]];
     self.synchronizationQueue = dispatch_queue_create([name cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_SERIAL);
-   name = [NSString stringWithFormat:@"com.heyang.imagedownloader.concurrentQueue-%@", [[NSUUID UUID] UUIDString]];
+     name = [NSString stringWithFormat:@"com.heyang.imagedownloader.concurrentQueue-%@", [[NSUUID UUID] UUIDString]];
     self.concurrentQueue = dispatch_queue_create([name cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_CONCURRENT);
     
 
