@@ -52,6 +52,8 @@
 
 - (void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions) options{
     
+    [self cancelImageDownloadTask];
+    
     if (!self.backgroundColor) {
         self.backgroundColor = [UIColor clearColor];
     }

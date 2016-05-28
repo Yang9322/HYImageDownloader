@@ -108,9 +108,6 @@ didCompleteWithError:(nullable NSError *)error{
         
     }
     NSInteger integer = indexPath.row % 7;
-    
-  
-    cell.imageView.backgroundColor = [UIColor whiteColor];
     [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:[UIImage imageNamed:@"timeline_image_placeholder"] options:HYImageDowloaderOptionFadeAnimation | HYImageDowloaderOptionRoundedRect];
 
     return cell;
