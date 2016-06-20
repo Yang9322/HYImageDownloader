@@ -327,13 +327,13 @@
         case HYImageDownloadFIFO:{
             
             HYImageDownloadMergedTask *task = self.queuedTasks[0];
-            [self.queuedTasks removeObject:task];
+            [self.queuedTasks removeObjectAtIndex:0];
             [self excuteNextTask:task];
         }
             break;
         case HYImageDownloadFILO:{
             HYImageDownloadMergedTask *task = [self.queuedTasks lastObject];
-            [self.queuedTasks removeObject:task];
+            [self.queuedTasks removeObjectAtIndex:self.queuedTasks.count - 1];
             [self excuteNextTask:task];
 
         }

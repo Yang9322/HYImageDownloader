@@ -37,7 +37,6 @@
 -(void)addImageForKey:(NSString *)URLIdentifier Image:(UIImage *)image{
     dispatch_barrier_sync(_synchorinizationQueye, ^{
         self.cachedImages[URLIdentifier] = image;
-
     });
     
 }
