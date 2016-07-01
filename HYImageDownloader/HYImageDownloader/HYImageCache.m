@@ -44,6 +44,56 @@ static inline dispatch_queue_t HYMemoryCacheReleaseQueue(){
 @implementation _HYLinkedMap
 
 
+-(instancetype)init{
+    self = [super init];
+    if (self) {
+        _dic = CFDictionaryCreateMutable(CFAllocatorGetDefault(), 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+        _releaseOnMainThread = NO;
+        _releaseAsynchronously = YES;
+    }
+    return self;
+
+}
+
+
+- (_HYLinkedMapNode *)removeTailNode{
+    if (!_tail) return nil;
+    _HYLinkedMapNode *tail = _tail;
+    CFDictionaryRemoveValue(_dic, (__bridge const void *)(_tail -> _key));
+    _totalCost -= _tail -> _cost;
+    _totalCount--;
+    if (_head == tail) {
+        _head = tail = nil;
+    }else{
+        _tail = _tail -> _prev;
+        _tail ->_next = nil;
+    }
+    return tail;
+}
+
+- (void)removeAll{
+    _totalCost = 0;
+    _totalCount = 0;
+    _head = nil;
+    _tail = nil;
+    if (CFDictionaryGetCount(_dic) > 0) {
+        CFMutableDictionaryRef holder = _dic;
+        _dic = CFDictionaryCreateMutable(CFAllocatorGetDefault(), 0, &kCFTypeDictionaryKeyCallBacks,&kCFTypeDictionaryValueCallBacks);
+        if (_releaseAsynchronously) {
+            dispatch_queue_t queue= _releaseOnMainThread ? dispatch_get_main_queue() : HYMemoryCacheReleaseQueue();
+            dispatch_async(queue, ^{
+                CFRelease(holder);
+            });
+        }else if (_releaseOnMainThread && !pthread_main_np()){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                CFRelease(holder);
+            });
+        }else{
+            CFRelease(holder);
+        }
+    }
+    
+}
 
 @end
 
@@ -93,15 +143,109 @@ static inline dispatch_queue_t HYMemoryCacheReleaseQueue(){
 
 
 - (void)_trimToCost:(NSUInteger)costLimit{
+    BOOL finish = NO;
+    pthread_mutex_lock(&_lock);
+    if (costLimit == 0) {
+        [_lru removeAll];
+        finish = YES;
+    }else if (_lru -> _totalCost <= costLimit){
+        finish = YES;
+    }
+    pthread_mutex_unlock(&_lock);
+    if (finish) return;
     
+    NSMutableArray *holder = [NSMutableArray array];
+    while (!finish) {
+        if (pthread_mutex_trylock(&_lock) == 0) {
+            if (_lru -> _totalCost > costLimit) {
+               _HYLinkedMapNode *node = [_lru removeTailNode];
+                if (node) [holder addObject:node];
+            }else{
+                finish = YES;
+            }
+            pthread_mutex_unlock(&_lock);
+        }else{
+            usleep(10 * 1000); //sleep for 10ms
+        }
+    }
+    
+    if (holder.count) {
+        dispatch_queue_t queue = _lru -> _releaseOnMainThread ? dispatch_get_main_queue() : HYMemoryCacheReleaseQueue();
+        dispatch_async(queue, ^{
+            [holder count];   //release in queue
+        });
+    }
 }
 
 - (void)_trimToCount:(NSUInteger)countLimit {
-
+    BOOL finish = NO;
+    pthread_mutex_lock(&_lock);
+    if (countLimit == 0) {
+        [_lru removeAll];
+        finish = YES;
+    }else if (_lru -> _totalCount <= countLimit){
+        finish = YES;
+    }
+    pthread_mutex_unlock(&_lock);
+    if (finish) return;
+    NSMutableArray *holder = [NSMutableArray array];
+    while (!finish) {
+        if (pthread_mutex_trylock(&_lock) == 0) {
+            if (_lru -> _totalCount > countLimit) {
+                _HYLinkedMapNode *node = [_lru removeTailNode];
+                if (node) [holder addObject:node];
+            }else{
+                finish = YES;
+            }
+            pthread_mutex_unlock(&_lock);
+        }else{
+            usleep(10 * 1000);
+        }
+    }
+    if (holder.count) {
+        dispatch_queue_t queue = _lru -> _releaseOnMainThread ? dispatch_get_main_queue() : HYMemoryCacheReleaseQueue();
+        dispatch_async(queue, ^{
+            [holder count];
+        });
+    }
+    
 }
 
 - (void)_trimToAge:(NSTimeInterval)ageLimit {
-
+    
+    BOOL finish = NO;
+    NSTimeInterval now = CACurrentMediaTime();
+    pthread_mutex_lock(&_lock);
+    if (ageLimit <= 0) {
+        [_lru removeAll];
+        finish = YES;
+    }else if (!_lru -> _tail || (now - _lru -> _tail -> _time) <= ageLimit){
+        finish = YES;
+    }
+    pthread_mutex_unlock(&_lock);
+    if (finish) return;
+    
+    NSMutableArray *holder = [NSMutableArray array];
+    while (!finish) {
+        if (pthread_mutex_trylock(&_lock) == 0) {
+            if (_lru ->  _tail && (now - _lru -> _tail -> _time) > ageLimit) {
+                _HYLinkedMapNode *node = [_lru removeTailNode];
+                if (node) [holder addObject:node];
+            }else{
+                finish = YES;
+            }
+            pthread_mutex_unlock(&_lock);
+        }else{
+            usleep(10 * 1000);
+        }
+    }
+    
+    if (holder.count) {
+        dispatch_queue_t queue = _lru -> _releaseOnMainThread ? dispatch_get_main_queue() : HYMemoryCacheReleaseQueue();
+        dispatch_async(queue, ^{
+            [holder count]; // release in queue
+        });
+    }
 }
 
 @end
