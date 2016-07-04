@@ -56,6 +56,38 @@ static inline dispatch_queue_t HYMemoryCacheReleaseQueue(){
 }
 
 
+- (void)insertNodeAtHead:(_HYLinkedMapNode *)node{
+   
+    CFDictionarySetValue(_dic, (__bridge const void *)(node -> _key), (__bridge const void *)(node));
+    _totalCost += node -> _cost;
+    _totalCount ++;
+    if (_head) {
+        node -> _next = _head;
+        _head -> _prev = node;
+        _head = node;
+    }else{
+        _head = _tail = node;
+    }
+}
+
+
+- (void)bringNodeToHead:(_HYLinkedMapNode *)node{
+    if (_head == node) return;
+    if (_tail == node) {
+        _tail = node -> _prev;
+        _tail -> _next = nil;
+    }else{
+        node -> _next ->_prev = node -> _prev;
+        node -> _prev -> _next = node -> _next;
+        
+    }
+    node -> _next = _head;
+    node -> _prev = nil;
+    _head -> _prev = node;
+    _head = node;
+}
+
+
 - (_HYLinkedMapNode *)removeTailNode{
     if (!_tail) return nil;
     _HYLinkedMapNode *tail = _tail;
@@ -69,6 +101,22 @@ static inline dispatch_queue_t HYMemoryCacheReleaseQueue(){
         _tail ->_next = nil;
     }
     return tail;
+}
+
+
+- (void)removeNode:(_HYLinkedMapNode *)node{
+    
+    CFDictionaryRemoveValue(_dic, (__bridge const void *)(node -> _key));
+    _totalCost -= node -> _cost;
+    _totalCount --;
+    if (node -> _next) node -> _next -> _prev = node -> _prev;
+    if (node -> _prev) node -> _prev -> _next = node -> _next;
+    if (_head == node) {
+        _head = node -> _next;
+    }
+    if (_tail == node) {
+        _tail = node -> _prev;
+    }
 }
 
 - (void)removeAll{
@@ -248,6 +296,125 @@ static inline dispatch_queue_t HYMemoryCacheReleaseQueue(){
     }
 }
 
+- (BOOL)containsObjectForKey:(id)key {
+    if (!key) return NO;
+    pthread_mutex_lock(&_lock);
+    BOOL contains = CFDictionaryContainsKey(_lru->_dic, (__bridge const void *)(key));
+    pthread_mutex_unlock(&_lock);
+    return contains;
+}
+
+
+-(void)setObject:(id)object forKey:(id)key{
+    [self setObject:object forKey:key withCost:0];
+}
+
+-(void)setObject:(id)object forKey:(id)key withCost:(NSUInteger)cost{
+    if (!key) return;
+    if (!object) {
+        [self removeObjectForKey:key];
+        return;
+    }
+    pthread_mutex_lock(&_lock);
+    _HYLinkedMapNode *node = CFDictionaryGetValue(_lru -> _dic, (__bridge const void *)(key));
+    NSTimeInterval now = CACurrentMediaTime();
+    if (node) {
+        _lru -> _totalCost -= node ->_cost;
+        _lru -> _totalCost += cost;
+        node -> _cost = cost;
+        node -> _time = now;
+        node -> _value = object;
+        [_lru bringNodeToHead:node];
+    }else{
+        node = [_HYLinkedMapNode new];
+        node -> _cost = cost;
+        node -> _time = now;
+        node -> _key = key;
+        node -> _value = object;
+        [_lru insertNodeAtHead:node];
+    }
+    
+    if (_lru -> _totalCost > -_costLimit) {
+        
+        dispatch_async(_queue, ^{
+            [self trimToCost:_costLimit];
+        });
+    }
+    
+    
+    if (_lru -> _totalCount > _countLimit) {
+        _HYLinkedMapNode *node = [_lru removeTailNode];
+        if (_lru -> _releaseAsynchronously) {
+            dispatch_queue_t queue =_lru -> _releaseOnMainThread ? dispatch_get_main_queue() : HYMemoryCacheReleaseQueue();
+            dispatch_async(queue, ^{
+                [node class];
+            });
+            
+        }else if (_lru -> _releaseOnMainThread && !pthread_main_np()){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [node class];
+            });
+        }
+    }
+    pthread_mutex_unlock(&_lock);
+}
+
+- (id)objectForKey:(id)key {
+    if (!key) return nil;
+    pthread_mutex_lock(&_lock);
+    _HYLinkedMapNode *node = CFDictionaryGetValue(_lru->_dic, (__bridge const void *)(key));
+    if (node) {
+        node->_time = CACurrentMediaTime();
+        [_lru bringNodeToHead:node];
+    }
+    pthread_mutex_unlock(&_lock);
+    return node ? node->_value : nil;
+}
+
+-(void)removeObjectForKey:(id)key{
+    if (!key) return;
+    pthread_mutex_lock(&_lock);
+    _HYLinkedMapNode *node = CFDictionaryGetValue(_lru -> _dic, (__bridge const void *)(key));
+    if (node) {
+        [_lru removeNode:node];
+        if (_lru -> _releaseAsynchronously) {
+            dispatch_queue_t queue = _lru -> _releaseOnMainThread ? dispatch_get_main_queue() : HYMemoryCacheReleaseQueue();
+            dispatch_async(queue, ^{
+                [node class];
+            });
+        }else if (_lru -> _releaseOnMainThread && !pthread_main_np()){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [node class];
+            });
+        }
+    }
+    pthread_mutex_unlock(&_lock);
+}
+
+
+-(void)removeAllObjects{
+    pthread_mutex_lock(&_lock);
+    [_lru removeAll];
+    pthread_mutex_unlock(&_lock);
+}
+
+- (void)trimToCount:(NSUInteger)count {
+    if (count == 0) {
+        [self removeAllObjects];
+        return;
+    }
+    [self _trimToCount:count];
+}
+
+- (void)trimToCost:(NSUInteger)cost {
+    [self _trimToCost:cost];
+}
+
+- (void)trimToAge:(NSTimeInterval)age {
+    [self _trimToAge:age];
+}
+
+
 @end
 
 
@@ -276,32 +443,28 @@ static inline dispatch_queue_t HYMemoryCacheReleaseQueue(){
 }
 
 -(void)addImageForKey:(NSString *)URLIdentifier Image:(UIImage *)image{
-    dispatch_barrier_sync(_synchorinizationQueye, ^{
-        self.cachedImages[URLIdentifier] = image;
-    });
+  
+    [_memoryCache setObject:image forKey:URLIdentifier];
     
 }
 
 -(UIImage *)imageWithKey:(NSString *)URLIdentifier{
-    __block UIImage *image = nil;
-    dispatch_barrier_sync(_synchorinizationQueye, ^{
-        image = self.cachedImages[URLIdentifier];
-    });
+    UIImage *image = [_memoryCache objectForKey:URLIdentifier];
     return image;
 }
 
 
 - (void)removeImageForKey:(NSString *)URLIdentifier{
-    dispatch_barrier_sync(_synchorinizationQueye, ^{
-        [self.cachedImages removeObjectForKey:URLIdentifier];
-    });
+    
+    [_memoryCache removeObjectForKey:URLIdentifier];
 }
 
 - (void)removeAllImage{
-    dispatch_barrier_sync(_synchorinizationQueye, ^{
-        [self.cachedImages removeAllObjects];
-    });
+    [_memoryCache removeAllObjects];
 }
+
+
+
 
 
 @end
