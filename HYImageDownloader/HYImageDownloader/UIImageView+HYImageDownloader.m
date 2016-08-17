@@ -59,6 +59,9 @@ NSString *const ImageFadeAnimationKey = @"HYImageFade";
         self.backgroundColor = [UIColor clearColor];
     }
     
+    if (!self.highlighted) {
+        [self.layer removeAnimationForKey:ImageFadeAnimationKey];
+    }
     
     if (placeHolder) {
         if (options & HYImageDowloaderOptionRoundedRect) {
@@ -87,7 +90,7 @@ NSString *const ImageFadeAnimationKey = @"HYImageFade";
 
          if (options & HYImageDowloaderOptionFadeAnimation) {
              UIImage *resizedImage = responseObject;
-             if (options & HYImageDowloaderOptionFadeAnimation) {
+             if (options & HYImageDowloaderOptionRoundedRect) {
                 resizedImage = [self adjustImageIfNeeded:responseObject];
              }
              self.image = resizedImage;
