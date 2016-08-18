@@ -106,7 +106,7 @@ didCompleteWithError:(nullable NSError *)error{
         
     }
     NSInteger integer = indexPath.row % 7;
-    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:[UIImage imageNamed:@"timeline_image_placeholder"] options:HYImageDowloaderOptionFadeAnimation | HYImageDowloaderOptionRoundedRect];
+    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:[UIImage imageNamed:@"timeline_image_placeholder"] options:HYImageDowloaderOptionRoundedRect |HYImageDowloaderOptionFadeAnimation ];
 
     return cell;
 }

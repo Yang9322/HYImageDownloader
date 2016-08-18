@@ -100,6 +100,8 @@ NSString *const ImageFadeAnimationKey = @"HYImageFade";
              transition.type = kCATransitionFade;
              [self.layer addAnimation:transition forKey:ImageFadeAnimationKey];
              
+         }else if(options & HYImageDowloaderOptionRoundedRect){
+             self.image = [self adjustImageIfNeeded:responseObject];
          }else{
              self.image = responseObject;
          }
