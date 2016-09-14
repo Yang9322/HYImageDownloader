@@ -9,7 +9,6 @@
 #import "HYImageCache.h"
 #import <CoreFoundation/CoreFoundation.h>
 #import <pthread.h>
-
 static inline dispatch_queue_t HYMemoryCacheReleaseQueue(){
     return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
 }
@@ -437,6 +436,7 @@ static inline dispatch_queue_t HYMemoryCacheReleaseQueue(){
 -(instancetype)initWithMemoryCapacity:(UInt64)memoryCapacity preferredMemoryCapacity:(UInt64)preferredMemoryCapacity{
     if (self = [super init]) {
         _memoryCache = [[HYMemoryCache alloc] init];
+        _diskCache = [[HYDiskCache alloc] init];
     }
     
     return self;
