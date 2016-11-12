@@ -52,6 +52,14 @@
 
 - (void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions) options{
     
+    //判断request是否有效
+    if (!request.URL) return;
+    
+    if ([self.activeReceipt.task.originalRequest.URL.absoluteString isEqualToString:request.URL.absoluteString]){
+        return;
+    }
+    
+    
     [self cancelImageDownloadTask];
     
     if (!self.backgroundColor) {
@@ -74,12 +82,7 @@
             self.image = [UIImage imageNamed:@"timeline_image_placeholder"];
         }
     }
-    //判断request是否有效
-    if (!request.URL) return;
-    
-    if ([self.activeReceipt.task.originalRequest.URL.absoluteString isEqualToString:request.URL.absoluteString]){
-        return;
-    }
+
     
      NSUUID *receiptID = [NSUUID UUID];
      HYImageDownloadReceipt *receipt = [[HYImageDownloader shareInstance] downloadImageForURLRequest:request withReceiptID:receiptID success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *responseObject) {
