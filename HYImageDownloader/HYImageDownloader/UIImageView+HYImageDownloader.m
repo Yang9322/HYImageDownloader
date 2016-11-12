@@ -32,6 +32,7 @@
 @end
 
 
+NSString *const ImageFadeAnimationKey = @"HYImageFade";
 
 @implementation UIImageView (HYImageDownloader)
 
@@ -66,6 +67,9 @@
         self.backgroundColor = [UIColor clearColor];
     }
     
+    if (!self.highlighted) {
+        [self.layer removeAnimationForKey:ImageFadeAnimationKey];
+    }
     
     if (placeHolder) {
         if (options & HYImageDowloaderOptionRoundedRect) {
@@ -88,15 +92,19 @@
      HYImageDownloadReceipt *receipt = [[HYImageDownloader shareInstance] downloadImageForURLRequest:request withReceiptID:receiptID success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *responseObject) {
 
          if (options & HYImageDowloaderOptionFadeAnimation) {
-             self.alpha = 0;
              UIImage *resizedImage = responseObject;
-             if (options & HYImageDowloaderOptionFadeAnimation) {
+             if (options & HYImageDowloaderOptionRoundedRect) {
                 resizedImage = [self adjustImageIfNeeded:responseObject];
              }
              self.image = resizedImage;
-             [UIView animateWithDuration:0.25 animations:^{
-                 self.alpha = 1;
-             }];
+             CATransition *transition = [CATransition animation];
+             transition.duration = 0.25f;
+             transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+             transition.type = kCATransitionFade;
+             [self.layer addAnimation:transition forKey:ImageFadeAnimationKey];
+             
+         }else if(options & HYImageDowloaderOptionRoundedRect){
+             self.image = [self adjustImageIfNeeded:responseObject];
          }else{
              self.image = responseObject;
          }

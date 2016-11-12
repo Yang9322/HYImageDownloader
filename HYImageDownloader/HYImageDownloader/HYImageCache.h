@@ -6,8 +6,8 @@
 //  Copyright © 2016年 He yang. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "HYDiskCache.h"
 
 
 @interface HYMemoryCache :NSObject
@@ -75,6 +75,8 @@
 @interface HYImageCache : NSObject<HYImageCache>
 
 @property (nonatomic,strong)HYMemoryCache *memoryCache;
+
+@property (nonatomic,strong)HYDiskCache *diskCache;
 
 @property (nonatomic,assign) UInt64 memoryCapacity;
 

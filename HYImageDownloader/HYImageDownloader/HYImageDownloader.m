@@ -134,8 +134,6 @@
         name = [NSString stringWithFormat:@"com.heyang.imagedownloader.responsequeue-%@", [[NSUUID UUID] UUIDString]];
         self.responseQueue = dispatch_queue_create([name cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_CONCURRENT);
 
-
-        
     }
     return self;
 }
@@ -212,7 +210,7 @@
                        if (image) {
                            [self.imageCache addImageForKey:URLIdentifier Image:image];
                            dispatch_async(dispatch_get_main_queue(), ^{
-                        for (HYImageResponseHandler *hander in mergeTask.responseHandlers) {                            hander.successBlock(URLRequest,(NSHTTPURLResponse *)response,image);
+                               for (HYImageResponseHandler *handler in mergeTask.responseHandlers) {                            handler.successBlock(URLRequest,(NSHTTPURLResponse *)response,image);
                                }
 
                            });
