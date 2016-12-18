@@ -113,14 +113,14 @@
     return [self initWithSession:session
                  downloadPrioritization:HYImageDownloadFIFO
                  maxActiveDownloadsCount:4
-                             imageCache:[[HYImageCache alloc] init]];
-
+                             imageCache:[HYCacheManager sharedInstance]];
+ 
 }
 
 
 - (instancetype)initWithSession: (NSURLSession *)session
          downloadPrioritization:(HYImageDownloadPrioritization)downloadPrioritization maxActiveDownloadsCount: (NSInteger)maxCounts
-                      imageCache:(id <HYImageCache>)imageCache{
+                      imageCache:(HYCacheManager *)imageCache{
     if (self = [super init]) {
         self.session = session;
         self.downloadPrioritization = downloadPrioritization;
@@ -170,7 +170,7 @@
             case NSURLRequestUseProtocolCachePolicy:
             case NSURLRequestReturnCacheDataElseLoad:
             case NSURLRequestReturnCacheDataDontLoad:{
-                UIImage *image = [self.imageCache imageWithKey:URLIdentifier];
+                UIImage *image = [self.imageCache objectForKey:URLIdentifier];
                 if (image) {
                     if (succss) {
                         dispatch_async(dispatch_get_main_queue(), ^{
@@ -208,7 +208,7 @@
 
                        UIImage *image = [UIImage imageWithData:data];
                        if (image) {
-                           [self.imageCache addImageForKey:URLIdentifier Image:image];
+                           [self.imageCache setObject:image withKey:URLIdentifier];
                            dispatch_async(dispatch_get_main_queue(), ^{
                                for (HYImageResponseHandler *handler in mergeTask.responseHandlers) {                            handler.successBlock(URLRequest,(NSHTTPURLResponse *)response,image);
                                }

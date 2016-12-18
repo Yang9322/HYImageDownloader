@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HYImageDownloader.h"
-#import "HYImageCache.h"
+#import "HYCacheManager.h"
 #import <UIKit/UIKit.h>
 typedef NS_ENUM(NSInteger,HYImageDownloadPrioritization){
     HYImageDownloadFIFO,
@@ -32,7 +32,7 @@ typedef NS_ENUM(NSInteger,HYImageDownloadPrioritization){
 
 @property (nonatomic,assign)NSInteger maxDownloadCount;
 
-@property (nonatomic,strong)id <HYImageCache> imageCache;
+@property (nonatomic,strong)HYCacheManager *imageCache;
 
 
 

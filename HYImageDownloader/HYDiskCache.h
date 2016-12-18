@@ -13,8 +13,8 @@
 - (instancetype)initWithPath:(NSString *)path
              inlineThreshold:(NSUInteger)threshold;
 
-- (void)addImageForKey:(NSString *)key Image:(UIImage *)image;
+- (void)setObj:(id)obj withKey:(NSString *)key;
 
--(UIImage *)imageWithKey:(NSString *)key;
+-(id)objWithKey:(NSString *)key;
 
 @end

@@ -10,6 +10,8 @@
 
 @interface HYCacheManager : NSObject
 
++(id)sharedInstance;
+
 - (void)setObject:(id)obj withKey:(NSString *)key;
 
 - (id)objectForKey:(NSString *)key;

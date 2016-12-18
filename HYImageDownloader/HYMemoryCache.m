@@ -1,17 +1,20 @@
 //
-//  HYImageCache.m
+//  HYMemoryCache.m
 //  HYImageDownloader
 //
-//  Created by He yang on 16/5/2.
+//  Created by He yang on 2016/12/18.
 //  Copyright © 2016年 He yang. All rights reserved.
 //
 
-#import "HYImageCache.h"
+#import "HYMemoryCache.h"
 #import <CoreFoundation/CoreFoundation.h>
 #import <pthread.h>
+#import <QuartzCore/QuartzCore.h>
+
 static inline dispatch_queue_t HYMemoryCacheReleaseQueue(){
     return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
 }
+
 
 @interface _HYLinkedMapNode : NSObject {
     @package
@@ -51,12 +54,12 @@ static inline dispatch_queue_t HYMemoryCacheReleaseQueue(){
         _releaseAsynchronously = YES;
     }
     return self;
-
+    
 }
 
 
 - (void)insertNodeAtHead:(_HYLinkedMapNode *)node{
-   
+    
     CFDictionarySetValue(_dic, (__bridge const void *)(node -> _key), (__bridge const void *)(node));
     _totalCost += node -> _cost;
     _totalCount ++;
@@ -152,7 +155,7 @@ static inline dispatch_queue_t HYMemoryCacheReleaseQueue(){
 
 - (instancetype)init{
     if (self = [super init]) {
-    pthread_mutex_init(&_lock, NULL);
+        pthread_mutex_init(&_lock, NULL);
         _lru = [_HYLinkedMap new];
         _queue = dispatch_queue_create("com.yang.cache.memory", DISPATCH_QUEUE_SERIAL);
         _countLimit = NSUIntegerMax;
@@ -174,7 +177,7 @@ static inline dispatch_queue_t HYMemoryCacheReleaseQueue(){
         if (!self) return;
         [self _trimInBackground];
         [self _trimRecursively];
-
+        
     });
 }
 
@@ -205,7 +208,7 @@ static inline dispatch_queue_t HYMemoryCacheReleaseQueue(){
     while (!finish) {
         if (pthread_mutex_trylock(&_lock) == 0) {
             if (_lru -> _totalCost > costLimit) {
-               _HYLinkedMapNode *node = [_lru removeTailNode];
+                _HYLinkedMapNode *node = [_lru removeTailNode];
                 if (node) [holder addObject:node];
             }else{
                 finish = YES;
@@ -412,59 +415,5 @@ static inline dispatch_queue_t HYMemoryCacheReleaseQueue(){
 - (void)trimToAge:(NSTimeInterval)age {
     [self _trimToAge:age];
 }
-
-
-@end
-
-
-
-
-@interface HYImageCache ()
-@property (nonatomic,strong)NSMutableDictionary *cachedImages;
-@property (nonatomic,strong)dispatch_queue_t synchorinizationQueye;
-
-@end
-
-@implementation HYImageCache
-
-
-//  为了后续的磁盘缓存做准备
--(instancetype)init{
-    return [self initWithMemoryCapacity:100 * 1024 * 1024 preferredMemoryCapacity:60 * 1024 * 1024];
-}
-
--(instancetype)initWithMemoryCapacity:(UInt64)memoryCapacity preferredMemoryCapacity:(UInt64)preferredMemoryCapacity{
-    if (self = [super init]) {
-        _memoryCache = [[HYMemoryCache alloc] init];
-        _diskCache = [[HYDiskCache alloc] init];
-    }
-    
-    return self;
-}
-
--(void)addImageForKey:(NSString *)URLIdentifier Image:(UIImage *)image{
-  
-    [_memoryCache setObject:image forKey:URLIdentifier];
-    
-}
-
--(UIImage *)imageWithKey:(NSString *)URLIdentifier{
-    UIImage *image = [_memoryCache objectForKey:URLIdentifier];
-    return image;
-}
-
-
-- (void)removeImageForKey:(NSString *)URLIdentifier{
-    
-    [_memoryCache removeObjectForKey:URLIdentifier];
-}
-
-- (void)removeAllImage{
-    [_memoryCache removeAllObjects];
-}
-
-
-
-
 
 @end

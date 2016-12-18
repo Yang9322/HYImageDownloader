@@ -1,16 +1,14 @@
 //
-//  HYImageCache.h
+//  HYMemoryCache.h
 //  HYImageDownloader
 //
-//  Created by He yang on 16/5/2.
+//  Created by He yang on 2016/12/18.
 //  Copyright © 2016年 He yang. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "HYDiskCache.h"
+#import <Foundation/Foundation.h>
 
-
-@interface HYMemoryCache :NSObject
+@interface HYMemoryCache : NSObject
 @property (nonatomic, copy) NSString *name;
 
 @property (nonatomic,readonly) NSUInteger totalCount;
@@ -54,37 +52,4 @@
 - (void)trimToCost:(NSUInteger)cost;
 
 - (void)trimToAge:(NSTimeInterval)age;
-
-
-@end
-
-
-@protocol HYImageCache <NSObject>
-
-- (void)addImageForKey:(NSString *)URLIdentifier Image:(UIImage *)image;
-
-- (UIImage *)imageWithKey:(NSString *)URLIdentifier;
-
-- (void)removeImageForKey:(NSString *)URLIdentifier;
-
-- (void)removeAllImage;
-
-
-@end
-
-@interface HYImageCache : NSObject<HYImageCache>
-
-@property (nonatomic,strong)HYMemoryCache *memoryCache;
-
-@property (nonatomic,strong)HYDiskCache *diskCache;
-
-@property (nonatomic,assign) UInt64 memoryCapacity;
-
-@property (nonatomic,assign)UInt64 preferredCapacity;
-
-- (instancetype)init;
-
-
-
-
 @end
