@@ -31,8 +31,8 @@
     if (self = [super init]) {
         _memoryCahce = [[HYMemoryCache alloc] init];
         NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
-        [cachePath stringByAppendingString:@"cacheManager.hy.cache"];
-        _diskCache = [[HYDiskCache alloc] initWithPath:cachePath inlineThreshold:20];
+        NSString *finalPath = [NSString stringWithFormat:@"%@/cacheManager.hy.cache",cachePath];
+        _diskCache = [[HYDiskCache alloc] initWithPath:finalPath inlineThreshold:20];
         
     }
     return self;
