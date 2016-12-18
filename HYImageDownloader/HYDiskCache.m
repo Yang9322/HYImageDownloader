@@ -31,9 +31,10 @@
             NSError *error;
             BOOL success = [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error];
             if (!success) {
-                NSLog(@"init cache path failed at%@",error);
+                NSAssert(0, @"init cache path failed");
                 return nil;
             }
+
             _path = path;
             _queue = dispatch_queue_create("com.yang.cache.disk", DISPATCH_QUEUE_SERIAL);
             _lock = dispatch_semaphore_create(1);
@@ -59,7 +60,6 @@
                 [data writeToFile:finalPath atomically:NO];
 
             }
-            id obj = [self objWithKey:key];
             
         });
    
