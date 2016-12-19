@@ -18,5 +18,5 @@
 
 - (id)objectForKey:(NSString *)key;
 
-
+- (void)removeAll;
 @end

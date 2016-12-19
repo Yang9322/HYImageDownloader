@@ -20,8 +20,10 @@
 @property (nonatomic,strong)dispatch_semaphore_t lock;
 
 @property (nonatomic,assign)NSInteger sizeLimit;
+
 @property (nonatomic,assign)NSTimeInterval ageLimit;
-@property (nonatomic,assign)NSInteger currentLimit;
+
+@property (nonatomic,assign)NSInteger currentSize;
 
 @end
 
@@ -40,19 +42,32 @@
             }
 
             _path = path;
-            _queue = dispatch_queue_create("com.yang.cache.disk", DISPATCH_QUEUE_SERIAL);
+            _queue = dispatch_queue_create("com.yang.cache.disk", DISPATCH_QUEUE_CONCURRENT);
             _lock = dispatch_semaphore_create(1);
             _sizeLimit = 10 *1000 *1000;
-            _currentLimit = [[NSUserDefaults standardUserDefaults] objectForKey:@"com.yang.cache.currentSize"] ? [[[NSUserDefaults standardUserDefaults] objectForKey:@"com.yang.cache.currentSize"] integerValue] : 0;
+            _currentSize = [[NSUserDefaults standardUserDefaults] objectForKey:@"com.yang.cache.currentSize"] ? [[[NSUserDefaults standardUserDefaults] objectForKey:@"com.yang.cache.currentSize"] integerValue] : 0;
             
-            
+            [self _trimInBackground];
         }
     }
     return self;
 }
 
 
-- (void)trimInBackground{
+- (void)_trimInBackground{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self _trimSize:_sizeLimit];
+        [self _trimAge:_ageLimit];
+        [self _trimInBackground];
+    });
+}
+
+
+- (void)_trimSize:(NSInteger)sizeLimit{
+    
+}
+
+- (void)_trimAge:(NSTimeInterval)ageLimit{
     
 }
 
@@ -62,11 +77,8 @@
         NSData *data = nil;
         Lock();
 
-        @try {
-            data = [NSKeyedArchiver archivedDataWithRootObject:obj];
-        } @catch (NSException *exception) {
-            
-        }
+        data = [NSKeyedArchiver archivedDataWithRootObject:obj];
+     
         if (data.length) {
             NSString *finalPath = [self generatefilenameWithkey:key];
             [data writeToFile:finalPath atomically:NO];
@@ -100,6 +112,10 @@
     [[NSFileManager defaultManager] removeItemAtPath:finalPath error:NULL];
     Unlock();
     return obj?:nil;
+}
+
+- (void)removeAll{
+    [[NSFileManager defaultManager] removeItemAtPath:_path error:NULL];
 }
 
 

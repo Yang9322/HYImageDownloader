@@ -51,4 +51,8 @@
     return obj?:nil;
 }
 
+- (void)removeAll{
+    [_diskCache removeAll];
+}
+
 @end
