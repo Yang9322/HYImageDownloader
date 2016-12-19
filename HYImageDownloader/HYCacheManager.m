@@ -33,6 +33,8 @@
         NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
         NSString *finalPath = [NSString stringWithFormat:@"%@/cacheManager.hy.cache",cachePath];
         _diskCache = [[HYDiskCache alloc] initWithPath:finalPath inlineThreshold:20];
+
+
         
     }
     return self;
