@@ -42,7 +42,7 @@
             }
 
             _path = path;
-            _queue = dispatch_queue_create("com.yang.cache.disk", DISPATCH_QUEUE_CONCURRENT);
+            _queue = dispatch_queue_create("com.yang.cache.disk", DISPATCH_QUEUE_SERIAL);
             _lock = dispatch_semaphore_create(1);
             _sizeLimit = 10 *1000 *1000;
             _currentSize = [[NSUserDefaults standardUserDefaults] objectForKey:@"com.yang.cache.currentSize"] ? [[[NSUserDefaults standardUserDefaults] objectForKey:@"com.yang.cache.currentSize"] integerValue] : 0;
@@ -115,7 +115,12 @@
 }
 
 - (void)removeAll{
-    [[NSFileManager defaultManager] removeItemAtPath:_path error:NULL];
+    
+    dispatch_async(_queue, ^{
+        [[NSFileManager defaultManager] removeItemAtPath:_path error:NULL];
+
+    });
+
 }
 
 
