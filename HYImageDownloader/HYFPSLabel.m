@@ -1,8 +1,8 @@
 //
 //  HYFPSLabel.m
-//  NIM
+//  HYImageDownloader
 //
-//  Created by He yang on 16/5/1.
+//  Created by He yang on 2016/12/18.
 //  Copyright © 2016年 He yang. All rights reserved.
 //
 

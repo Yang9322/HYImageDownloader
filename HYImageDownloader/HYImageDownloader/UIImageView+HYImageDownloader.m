@@ -8,7 +8,6 @@
 
 #import "UIImageView+HYImageDownloader.h"
 
-#import "HYImageDownloader.h"
 
 #import "objc/runtime.h"
 
@@ -71,6 +70,10 @@ NSString *const ImageFadeAnimationKey = @"HYImageFade";
         [self.layer removeAnimationForKey:ImageFadeAnimationKey];
     }
     
+    if (options & HYImageDowloaderOptionsIgnoreCache) {
+        
+    }
+    
     if (placeHolder) {
         if (options & HYImageDowloaderOptionRoundedRect) {
             self.image = [self adjustImageIfNeeded:placeHolder];
@@ -89,7 +92,7 @@ NSString *const ImageFadeAnimationKey = @"HYImageFade";
 
     
      NSUUID *receiptID = [NSUUID UUID];
-     HYImageDownloadReceipt *receipt = [[HYImageDownloader shareInstance] downloadImageForURLRequest:request withReceiptID:receiptID success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *responseObject) {
+     HYImageDownloadReceipt *receipt = [[HYImageDownloader shareInstance] downloadImageForURLRequest:request withReceiptID:receiptID success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *responseObject){
 
          if (options & HYImageDowloaderOptionFadeAnimation) {
              UIImage *resizedImage = responseObject;
@@ -114,7 +117,7 @@ NSString *const ImageFadeAnimationKey = @"HYImageFade";
         
         [self removeActiveReceipt];
 
-    }];
+    } options:options];
     self.activeReceipt = receipt;
     
     

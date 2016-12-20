@@ -83,7 +83,7 @@ didCompleteWithError:(nullable NSError *)error{
      name = [NSString stringWithFormat:@"com.heyang.imagedownloader.concurrentQueue-%@", [[NSUUID UUID] UUIDString]];
     self.concurrentQueue = dispatch_queue_create([name cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_CONCURRENT);
     
-    [self addObserver];
+//    [self addObserver];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -164,7 +164,7 @@ didCompleteWithError:(nullable NSError *)error{
         
     }
     NSInteger integer = indexPath.row % 7;
-    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:[UIImage imageNamed:@"timeline_image_placeholder"] options:HYImageDowloaderOptionRoundedRect |HYImageDowloaderOptionFadeAnimation ];
+    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:[UIImage imageNamed:@"timeline_image_placeholder"] options:HYImageDowloaderOptionRoundedRect |HYImageDowloaderOptionFadeAnimation];
 
     return cell;
 }

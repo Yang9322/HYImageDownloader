@@ -16,6 +16,14 @@ typedef NS_ENUM(NSInteger,HYImageDownloadPrioritization){
 };
 
 
+typedef NS_OPTIONS(NSInteger,HYImageDowloaderOptions) {
+    HYImageDowloaderOptionNone = 1 << 0,//Default no options
+    HYImageDowloaderOptionFadeAnimation = 1 << 1,//When download image successfully,add a fade animation to image
+    HYImageDowloaderOptionRoundedRect = 1 << 2, //When download image successfully,clip the imageView with cornerRadius
+    HYImageDowloaderOptionsIgnoreCache = 1 << 3  // Download image directly,igonore the memory cache and disk cache
+    //To be continued ...
+};
+
 @interface HYImageDownloadReceipt : NSObject
 
 @property (nonatomic,strong)NSURLSessionTask *task;
@@ -35,13 +43,13 @@ typedef NS_ENUM(NSInteger,HYImageDownloadPrioritization){
 @property (nonatomic,strong)HYCacheManager *imageCache;
 
 
-
 + (instancetype)shareInstance;
 
 - (HYImageDownloadReceipt *)downloadImageForURLRequest:(NSURLRequest *)URLRequest
                                          withReceiptID:(NSUUID *)receiptID
                                                success:(void (^) (NSURLRequest *request ,NSHTTPURLResponse *response,UIImage *responseObject))succss
-                                               failure:( void (^)(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error))failure;
+                                               failure:( void (^)(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error))failure
+                                               options:(HYImageDowloaderOptions) options;
 
 
 - (void)cancelTaskWithURLRequest:(NSURLRequest *)URLRequest;

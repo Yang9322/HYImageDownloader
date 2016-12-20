@@ -8,6 +8,7 @@
 
 #import "HYImageDownloader.h"
 
+
 @interface HYImageDownloader ()
 
 @property (nonatomic,strong)dispatch_queue_t synchronizationQueue;
@@ -139,7 +140,7 @@
 }
 
 
--(HYImageDownloadReceipt *)downloadImageForURLRequest:(NSURLRequest *)URLRequest withReceiptID:(NSUUID *)receiptID success:(void (^)(NSURLRequest *, NSHTTPURLResponse *, UIImage *))succss failure:(void (^)(NSURLRequest *, NSHTTPURLResponse *, NSError *))failure{
+-(HYImageDownloadReceipt *)downloadImageForURLRequest:(NSURLRequest *)URLRequest withReceiptID:(NSUUID *)receiptID success:(void (^)(NSURLRequest *, NSHTTPURLResponse *, UIImage *))succss failure:(void (^)(NSURLRequest *, NSHTTPURLResponse *, NSError *))failure options:(HYImageDowloaderOptions)options{
     
 
     __block NSURLSessionDataTask *task = nil;
@@ -166,28 +167,31 @@
             return;
         }
         //尝试从缓存中取图片并调用success
-        switch (URLRequest.cachePolicy) {
-            case NSURLRequestUseProtocolCachePolicy:
-            case NSURLRequestReturnCacheDataElseLoad:
-            case NSURLRequestReturnCacheDataDontLoad:{
-                UIImage *image = [self.imageCache objectForKey:URLIdentifier];
-                if (image) {
-                    
-                    if (succss) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            succss(URLRequest,nil,image);
-                        });
+        if (!(options & HYImageDowloaderOptionsIgnoreCache)) {
+            switch (URLRequest.cachePolicy) {
+                case NSURLRequestUseProtocolCachePolicy:
+                case NSURLRequestReturnCacheDataElseLoad:
+                case NSURLRequestReturnCacheDataDontLoad:{
+                    UIImage *image = [self.imageCache objectForKey:URLIdentifier];
+                    if (image) {
+                        
+                        if (succss) {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                succss(URLRequest,nil,image);
+                            });
+                        }
+                        
+                        return;
                     }
-                 
-                    return;
+                    
                 }
-                
-            }
-                break;
-                
-            default:
-                break;
+                    break;
+                    
+                default:
+                    break;
+            } 
         }
+ 
 
       //创建新的task
        NSURLSessionDataTask *createdTask = [self.session dataTaskWithRequest:URLRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
