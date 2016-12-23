@@ -10,5 +10,5 @@
 
 @interface CustomCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *customImageView;
-
+@property (copy,nonatomic)NSString *markString;
 @end

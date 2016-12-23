@@ -157,13 +157,18 @@ didCompleteWithError:(nullable NSError *)error{
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     CustomCell *cell =[tableView dequeueReusableCellWithIdentifier:@"CustomCell"];
+    
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:nil options:nil] lastObject]; 
     }
     NSInteger integer = indexPath.row % 7;
-    
+    cell.markString = @"unresolved";
     [cell.customImageView hy_setImageWithURLString:array[integer] placeHolder:nil options:HYImageDowloaderOptionRoundedRect |HYImageDowloaderOptionFadeAnimation withCompletionBlock:^(UIImage *image, NSError *error) {
-        
+        if (image) {
+            cell.markString = @"resolved";
+   
+        }
+
     }];
     
     return cell;
@@ -171,8 +176,16 @@ didCompleteWithError:(nullable NSError *)error{
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
+    CustomCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    NSInteger integer = indexPath.row % 7;
+    cell.markString = @"unresolved";
+    [cell.customImageView hy_setImageWithURLString:array[integer] placeHolder:nil options:HYImageDowloaderOptionRoundedRect |HYImageDowloaderOptionFadeAnimation withCompletionBlock:^(UIImage *image, NSError *error) {
+        if (image) {
+            cell.markString = @"resolved";
+            
+        }
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
