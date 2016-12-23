@@ -113,7 +113,7 @@
     
     return [self initWithSession:session
                  downloadPrioritization:HYImageDownloadFIFO
-                 maxActiveDownloadsCount:4
+                 maxActiveDownloadsCount:16
                              imageCache:[HYCacheManager sharedInstance]];
  
 }

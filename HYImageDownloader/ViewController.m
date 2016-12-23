@@ -161,8 +161,11 @@ didCompleteWithError:(nullable NSError *)error{
     }
     NSInteger integer = indexPath.row % 7;
     cell.imageView.bounds = CGRectMake(0, 0, 100, 100);
-    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:nil options:HYImageDowloaderOptionRoundedRect |HYImageDowloaderOptionFadeAnimation];
-
+    
+    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:nil options:HYImageDowloaderOptionRoundedRect |HYImageDowloaderOptionFadeAnimation withCompletionBlock:^(UIImage *image, NSError *error) {
+        cell.imageView.image = image;
+    }];
+    
     return cell;
 }
 
