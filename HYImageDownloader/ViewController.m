@@ -82,7 +82,7 @@ didCompleteWithError:(nullable NSError *)error{
     self.synchronizationQueue = dispatch_queue_create([name cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_SERIAL);
      name = [NSString stringWithFormat:@"com.heyang.imagedownloader.concurrentQueue-%@", [[NSUUID UUID] UUIDString]];
     self.concurrentQueue = dispatch_queue_create([name cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_CONCURRENT);
-    
+    [[HYImageDownloader shareInstance].imageCache removeAll];
 //    [self addObserver];
     // Do any additional setup after loading the view, typically from a nib.
 }
@@ -158,23 +158,15 @@ didCompleteWithError:(nullable NSError *)error{
     UITableViewCell *cell =[tableView dequeueReusableCellWithIdentifier:@"defulat"];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defulat"];
-        [cell addObserver:self forKeyPath:@"contentView.frame" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-        
-        cell.imageView.frame = CGRectMake(0, 0, cell.contentView.frame.size.height, cell.contentView.frame.size.height);
-        
     }
     NSInteger integer = indexPath.row % 7;
-    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:[UIImage imageNamed:@"timeline_image_placeholder"] options:HYImageDowloaderOptionRoundedRect |HYImageDowloaderOptionFadeAnimation];
+    cell.imageView.bounds = CGRectMake(0, 0, 100, 100);
+    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:nil options:HYImageDowloaderOptionRoundedRect |HYImageDowloaderOptionFadeAnimation];
 
     return cell;
 }
 
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context{
-    
-    NSLog(@" begin---%@---end",change);
- 
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

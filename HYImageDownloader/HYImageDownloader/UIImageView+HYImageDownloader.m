@@ -70,13 +70,12 @@ NSString *const ImageFadeAnimationKey = @"HYImageFade";
         [self.layer removeAnimationForKey:ImageFadeAnimationKey];
     }
     
-    if (options & HYImageDowloaderOptionsIgnoreCache) {
-        
-    }
     
     if (placeHolder) {
         if (options & HYImageDowloaderOptionRoundedRect) {
-            self.image = [self adjustImageIfNeeded:placeHolder];
+            [self adjustImageIfNeeded:placeHolder withCompletionBlock:^(UIImage *destiImage) {
+                self.image = destiImage;
+            }];
         }else{
             self.image = placeHolder;
 
@@ -84,7 +83,9 @@ NSString *const ImageFadeAnimationKey = @"HYImageFade";
 
     }else{
         if (options & HYImageDowloaderOptionRoundedRect) {
-            self.image =[self adjustImageIfNeeded:[UIImage imageNamed:@"timeline_image_placeholder"]];
+            [self adjustImageIfNeeded:[UIImage imageNamed:@"timeline_image_placeholder"] withCompletionBlock:^(UIImage *destiImage) {
+                self.image = destiImage;
+            }];
         }else{
             self.image = [UIImage imageNamed:@"timeline_image_placeholder"];
         }
@@ -97,9 +98,13 @@ NSString *const ImageFadeAnimationKey = @"HYImageFade";
          if (options & HYImageDowloaderOptionFadeAnimation) {
              UIImage *resizedImage = responseObject;
              if (options & HYImageDowloaderOptionRoundedRect) {
-                resizedImage = [self adjustImageIfNeeded:responseObject];
+                [self adjustImageIfNeeded:resizedImage withCompletionBlock:^(UIImage *destiImage) {
+                    self.image = destiImage;
+                }];
+             }else{
+                 self.image = resizedImage;
+
              }
-             self.image = resizedImage;
              CATransition *transition = [CATransition animation];
              transition.duration = 0.25f;
              transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -107,7 +112,9 @@ NSString *const ImageFadeAnimationKey = @"HYImageFade";
              [self.layer addAnimation:transition forKey:ImageFadeAnimationKey];
              
          }else if(options & HYImageDowloaderOptionRoundedRect){
-             self.image = [self adjustImageIfNeeded:responseObject];
+             [self adjustImageIfNeeded:responseObject withCompletionBlock:^(UIImage *destiImage) {
+                 self.image = destiImage;
+             }];
          }else{
              self.image = responseObject;
          }
@@ -143,6 +150,42 @@ NSString *const ImageFadeAnimationKey = @"HYImageFade";
 
 
 #pragma mark HYImageRoundedRectOption
+
+
+- (void)adjustImageIfNeeded:(UIImage *)image withCompletionBlock:(void (^) (UIImage *destiImage))completion{
+    if (self.bounds.size.width<= 0 || self.bounds.size.height <= 0 ) {
+        return ;
+    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        UIGraphicsBeginImageContextWithOptions(self.bounds.size, 0, 0);
+        
+        UIImage *resizedImage  = nil;
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextAddPath(context, [self path]);
+        CGContextClip(context);
+        if (image && image.size.height && image.size.width){
+            //ScaleAspectFill
+            CGPoint center = CGPointMake(self.bounds.size.width * .5f, self.bounds.size.height * .5f);
+            //Judge which is smaller,then shrink it
+            CGFloat scaleW = image.size.width  / self.bounds.size.width;
+            CGFloat scaleH = image.size.height / self.bounds.size.height;
+            CGFloat scale = scaleW < scaleH ? scaleW : scaleH;
+            CGSize  size = CGSizeMake(image.size.width / scale, image.size.height / scale);
+            CGRect  drawRect = CGRectWithCenterAndSize(center, size);
+            
+            CGContextTranslateCTM(context, 0, self.bounds.size.height);
+            CGContextScaleCTM(context, 1.0, -1.0);
+            CGContextDrawImage(context, drawRect, image.CGImage);
+            
+            resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+            
+        }
+        UIGraphicsEndImageContext();
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(resizedImage);
+        });
+    });
+}
 
 - (UIImage *)adjustImageIfNeeded:(UIImage *)image{
     if (self.bounds.size.width<= 0 || self.bounds.size.height <= 0 ) {
