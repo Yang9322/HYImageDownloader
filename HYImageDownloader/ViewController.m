@@ -10,6 +10,7 @@
 #import "UIImageView+HYImageDownloader.h"
 #import "HYFPSLabel.h"
 #import "SDWebImage/UIImageView+WebCache.h"
+#import "CustomCell.h"
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -155,21 +156,24 @@ didCompleteWithError:(nullable NSError *)error{
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell =[tableView dequeueReusableCellWithIdentifier:@"defulat"];
+    CustomCell *cell =[tableView dequeueReusableCellWithIdentifier:@"CustomCell"];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"defulat"];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:nil options:nil] lastObject]; 
     }
     NSInteger integer = indexPath.row % 7;
-    cell.imageView.bounds = CGRectMake(0, 0, 100, 100);
     
-    [cell.imageView hy_setImageWithURLString:array[integer] placeHolder:nil options:HYImageDowloaderOptionRoundedRect |HYImageDowloaderOptionFadeAnimation withCompletionBlock:^(UIImage *image, NSError *error) {
-        cell.imageView.image = image;
+    [cell.customImageView hy_setImageWithURLString:array[integer] placeHolder:nil options:HYImageDowloaderOptionRoundedRect |HYImageDowloaderOptionFadeAnimation withCompletionBlock:^(UIImage *image, NSError *error) {
+        
     }];
     
     return cell;
 }
 
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

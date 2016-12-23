@@ -206,7 +206,6 @@
                        dispatch_async(dispatch_get_main_queue(), ^{
                            for (HYImageResponseHandler *hander in mergeTask.responseHandlers) {
                                    hander.failureBlock(URLRequest,nil,error);
-
                            }
                        });
                    }else{
@@ -215,7 +214,8 @@
                        if (image) {
                            [self.imageCache setObject:image withKey:URLIdentifier];
                            dispatch_async(dispatch_get_main_queue(), ^{
-                               for (HYImageResponseHandler *handler in mergeTask.responseHandlers) {                            handler.successBlock(URLRequest,(NSHTTPURLResponse *)response,image);
+                               for (HYImageResponseHandler *handler in mergeTask.responseHandlers) {
+                                   handler.successBlock(URLRequest,(NSHTTPURLResponse *)response,image);
                                }
 
                            });
