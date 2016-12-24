@@ -9,7 +9,6 @@
 #import "ViewController.h"
 #import "UIImageView+HYImageDownloader.h"
 #import "HYFPSLabel.h"
-#import "SDWebImage/UIImageView+WebCache.h"
 #import "CustomCell.h"
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
 
