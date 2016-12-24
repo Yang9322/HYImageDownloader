@@ -91,17 +91,8 @@ NSString *const ImageFadeAnimationKey = @"HYImageFade";
 
         }
 
-    }else{
-        if (options & HYImageDowloaderOptionRoundedRect) {
-            [self adjustImageIfNeeded:[UIImage imageNamed:@"timeline_image_placeholder"] withCompletionBlock:^(UIImage *destiImage) {
-                self.image = destiImage;
-            }];
-        }else{
-            self.image = [UIImage imageNamed:@"timeline_image_placeholder"];
-        }
     }
-
-    
+ 
      NSUUID *receiptID = [NSUUID UUID];
      HYImageDownloadReceipt *receipt = [[HYImageDownloader shareInstance] downloadImageForURLRequest:request withReceiptID:receiptID success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *responseObject){
 
