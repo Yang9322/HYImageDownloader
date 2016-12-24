@@ -7,13 +7,15 @@
 //
 
 #import "HYImageDownloader.h"
-
+#import "UIImage+Decode.h"
 
 @interface HYImageDownloader ()
 
 @property (nonatomic,strong)dispatch_queue_t synchronizationQueue;
 
 @property (nonatomic,strong)dispatch_queue_t responseQueue;
+
+@property (nonatomic,strong)dispatch_queue_t decodeQueue;
 
 @property (nonatomic,strong)NSMutableArray *queuedTasks;
 
@@ -67,6 +69,7 @@
         self.uuid = uuid;
         self.successBlock = success;
         self.failureBlock = failure;
+        
     }
     return self;
 }
@@ -123,24 +126,27 @@
          downloadPrioritization:(HYImageDownloadPrioritization)downloadPrioritization maxActiveDownloadsCount: (NSInteger)maxCounts
                       imageCache:(HYCacheManager *)imageCache{
     if (self = [super init]) {
-        self.session = session;
-        self.downloadPrioritization = downloadPrioritization;
-        self.maxDownloadCount = maxCounts;
-        self.imageCache = imageCache;
-        self.queuedTasks = [NSMutableArray array];
-        self.mergedTasks = [NSMutableDictionary dictionary];
-        self.activeTaskCount = 0;
+        _session = session;
+        _downloadPrioritization = downloadPrioritization;
+        _maxDownloadCount = maxCounts;
+        _imageCache = imageCache;
+        _queuedTasks = [NSMutableArray array];
+        _mergedTasks = [NSMutableDictionary dictionary];
+        _activeTaskCount = 0;
+        _decodeImageInBackground = YES;
         NSString *name = [NSString stringWithFormat:@"com.heyang.imagedownloader.synchronizationqueue-%@", [[NSUUID UUID] UUIDString]];
         self.synchronizationQueue = dispatch_queue_create([name cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_SERIAL);
         name = [NSString stringWithFormat:@"com.heyang.imagedownloader.responsequeue-%@", [[NSUUID UUID] UUIDString]];
         self.responseQueue = dispatch_queue_create([name cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_CONCURRENT);
+        name = [NSString stringWithFormat:@"com.heyang.imagedownloader.decodequeue-%@", [[NSUUID UUID] UUIDString]];
+         self.decodeQueue = dispatch_queue_create([name cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_CONCURRENT);
 
     }
     return self;
 }
 
 
--(HYImageDownloadReceipt *)downloadImageForURLRequest:(NSURLRequest *)URLRequest withReceiptID:(NSUUID *)receiptID success:(void (^)(NSURLRequest *, NSHTTPURLResponse *, UIImage *))succss failure:(void (^)(NSURLRequest *, NSHTTPURLResponse *, NSError *))failure options:(HYImageDowloaderOptions)options{
+-(HYImageDownloadReceipt *)downloadImageForURLRequest:(NSURLRequest *)URLRequest withReceiptID:(NSUUID *)receiptID success:(void (^)(NSURLRequest *, NSHTTPURLResponse *, UIImage *))succss failure:(void (^)(NSURLRequest *, NSHTTPURLResponse *, NSError *))failure options:(HYImageDownloaderOptions)options{
     
 
     __block NSURLSessionDataTask *task = nil;
@@ -167,7 +173,7 @@
             return;
         }
         //尝试从缓存中取图片并调用success
-        if (!(options & HYImageDowloaderOptionsIgnoreCache)) {
+        if (!(options & HYImageDownloaderOptionsIgnoreCache)) {
             switch (URLRequest.cachePolicy) {
                 case NSURLRequestUseProtocolCachePolicy:
                 case NSURLRequestReturnCacheDataElseLoad:
@@ -209,17 +215,33 @@
                            }
                        });
                    }else{
-
                        UIImage *image = [UIImage imageWithData:data];
-                       if (image) {
-                           [self.imageCache setObject:image withKey:URLIdentifier];
-                           dispatch_async(dispatch_get_main_queue(), ^{
-                               for (HYImageResponseHandler *handler in mergeTask.responseHandlers) {
-                                   handler.successBlock(URLRequest,(NSHTTPURLResponse *)response,image);
-                               }
 
-                           });
+                       if (_decodeImageInBackground) {
+                        dispatch_async(_decodeQueue, ^{
+                            UIImage *decodeImage = [image imageByDecoded];
+                            [self.imageCache setObject:decodeImage withKey:URLIdentifier];
+
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                for (HYImageResponseHandler *handler in mergeTask.responseHandlers) {
+                                    handler.successBlock(URLRequest,(NSHTTPURLResponse *)response,decodeImage);
+                                }
+                                
+                            });
+                        });
+                           
+                       }else{
+                           if (image) {
+                               [self.imageCache setObject:image withKey:URLIdentifier];
+                               dispatch_async(dispatch_get_main_queue(), ^{
+                                   for (HYImageResponseHandler *handler in mergeTask.responseHandlers) {
+                                       handler.successBlock(URLRequest,(NSHTTPURLResponse *)response,image);
+                                   }
+                                   
+                               });
+                           }
                        }
+                 
                        
                    }
                    dispatch_async(self.synchronizationQueue, ^{

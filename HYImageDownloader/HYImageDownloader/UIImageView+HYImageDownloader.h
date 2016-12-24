@@ -19,16 +19,16 @@
 - (void)hy_setImageWithURLString:(NSString *)URLString;
 
 
-- (void)hy_setImageWithURLString:(NSString *)URLString placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions) options;
+- (void)hy_setImageWithURLString:(NSString *)URLString placeHolder:(UIImage *)placeHolder options:(HYImageDownloaderOptions) options;
 
 
-- (void)hy_setImageWithURLString:(NSString *)URLString placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions) options withCompletionBlock:(void (^) (UIImage *image,NSError *error))completion;
+- (void)hy_setImageWithURLString:(NSString *)URLString placeHolder:(UIImage *)placeHolder options:(HYImageDownloaderOptions) options withCompletionBlock:(void (^) (UIImage *image,NSError *error))completion;
 
 
-- (void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions) options;
+- (void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder options:(HYImageDownloaderOptions) options;
 
 
-- (void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions) options withCompletionBlock:(void (^) (UIImage *image,NSError *error))completion;
+- (void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder options:(HYImageDownloaderOptions) options withCompletionBlock:(void (^) (UIImage *image,NSError *error))completion;
 
 
 - (void)cancelImageDownloadTask;

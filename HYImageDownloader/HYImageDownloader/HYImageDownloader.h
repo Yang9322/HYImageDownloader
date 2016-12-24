@@ -16,11 +16,12 @@ typedef NS_ENUM(NSInteger,HYImageDownloadPrioritization){
 };
 
 
-typedef NS_OPTIONS(NSInteger,HYImageDowloaderOptions) {
-    HYImageDowloaderOptionNone = 1 << 0,//Default no options
-    HYImageDowloaderOptionFadeAnimation = 1 << 1,//When download image successfully,add a fade animation to image
-    HYImageDowloaderOptionRoundedRect = 1 << 2, //When download image successfully,clip the imageView with cornerRadius
-    HYImageDowloaderOptionsIgnoreCache = 1 << 3  // Download image directly,igonore the memory cache and disk cache
+typedef NS_OPTIONS(NSInteger,HYImageDownloaderOptions) {
+    HYImageDownloaderOptionNone = 1 << 0,//Default no options
+    
+    HYImageDownloaderOptionFadeAnimation = 1 << 1,//When download image successfully,add a fade animation to image
+    HYImageDownloaderOptionRoundedRect = 1 << 2, //When download image successfully,clip the imageView with cornerRadius
+    HYImageDownloaderOptionsIgnoreCache = 1 << 3  // Download image directly,igonore the memory cache and disk cache
     //To be continued ...
 };
 
@@ -42,6 +43,8 @@ typedef NS_OPTIONS(NSInteger,HYImageDowloaderOptions) {
 
 @property (nonatomic,strong)HYCacheManager *imageCache;
 
+@property (nonatomic,assign)BOOL decodeImageInBackground;//default is yes
+
 
 + (instancetype)shareInstance;
 
@@ -49,7 +52,7 @@ typedef NS_OPTIONS(NSInteger,HYImageDowloaderOptions) {
                                          withReceiptID:(NSUUID *)receiptID
                                                success:(void (^) (NSURLRequest *request ,NSHTTPURLResponse *response,UIImage *responseObject))succss
                                                failure:( void (^)(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error))failure
-                                               options:(HYImageDowloaderOptions) options;
+                                               options:(HYImageDownloaderOptions) options;
 
 
 - (void)cancelTaskWithURLRequest:(NSURLRequest *)URLRequest;

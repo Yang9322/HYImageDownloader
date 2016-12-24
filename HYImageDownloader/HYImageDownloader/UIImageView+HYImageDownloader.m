@@ -40,27 +40,27 @@ NSString *const ImageFadeAnimationKey = @"HYImageFade";
     [self hy_setImageWithURLString:URLString placeHolder:nil options:kNilOptions];
 }
 
-- (void)hy_setImageWithURLString:(NSString *)URLString placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions) options{
+- (void)hy_setImageWithURLString:(NSString *)URLString placeHolder:(UIImage *)placeHolder options:(HYImageDownloaderOptions) options{
     
    
     
     [self hy_setImageWithURLString:URLString placeHolder:placeHolder options:options withCompletionBlock:nil];
 }
 
--(void)hy_setImageWithURLString:(NSString *)URLString placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions)options withCompletionBlock:(void (^)(UIImage *, NSError *))completion{
+-(void)hy_setImageWithURLString:(NSString *)URLString placeHolder:(UIImage *)placeHolder options:(HYImageDownloaderOptions)options withCompletionBlock:(void (^)(UIImage *, NSError *))completion{
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:URLString]];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
     [self hy_setImageWithRequest:request placeHolder:placeHolder options:options withCompletionBlock:completion];
  
 }
 
-- (void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions) options{
+- (void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder options:(HYImageDownloaderOptions) options{
 
     [self hy_setImageWithRequest:request placeHolder:placeHolder options:options withCompletionBlock:nil];
 }
 
 
-- (void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder options:(HYImageDowloaderOptions) options withCompletionBlock:(void (^)(UIImage *, NSError *))completion{
+- (void)hy_setImageWithRequest:(NSURLRequest *)request placeHolder:(UIImage *)placeHolder options:(HYImageDownloaderOptions) options withCompletionBlock:(void (^)(UIImage *, NSError *))completion{
     
     //判断request是否有效
     if (!request.URL) return;
@@ -82,7 +82,7 @@ NSString *const ImageFadeAnimationKey = @"HYImageFade";
     
     
     if (placeHolder) {
-        if (options & HYImageDowloaderOptionRoundedRect) {
+        if (options & HYImageDownloaderOptionRoundedRect) {
             [self adjustImageIfNeeded:placeHolder withCompletionBlock:^(UIImage *destiImage) {
                 self.image = destiImage;
             }];
@@ -96,9 +96,9 @@ NSString *const ImageFadeAnimationKey = @"HYImageFade";
      NSUUID *receiptID = [NSUUID UUID];
      HYImageDownloadReceipt *receipt = [[HYImageDownloader shareInstance] downloadImageForURLRequest:request withReceiptID:receiptID success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *responseObject){
 
-         if (options & HYImageDowloaderOptionFadeAnimation) {
+         if (options & HYImageDownloaderOptionFadeAnimation) {
              UIImage *resizedImage = responseObject;
-             if (options & HYImageDowloaderOptionRoundedRect) {
+             if (options & HYImageDownloaderOptionRoundedRect) {
                 [self adjustImageIfNeeded:resizedImage withCompletionBlock:^(UIImage *destiImage) {
                     self.image = destiImage;
                 completion?completion(resizedImage,nil):nil;
@@ -115,7 +115,7 @@ NSString *const ImageFadeAnimationKey = @"HYImageFade";
              transition.type = kCATransitionFade;
              [self.layer addAnimation:transition forKey:ImageFadeAnimationKey];
              
-         }else if(options & HYImageDowloaderOptionRoundedRect){
+         }else if(options & HYImageDownloaderOptionRoundedRect){
              [self adjustImageIfNeeded:responseObject withCompletionBlock:^(UIImage *destiImage) {
                  self.image = destiImage;
                  completion?completion(destiImage,nil):nil;

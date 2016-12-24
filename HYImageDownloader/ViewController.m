@@ -162,7 +162,7 @@ didCompleteWithError:(nullable NSError *)error{
     }
     NSInteger integer = indexPath.row % 7;
     cell.markString = @"unresolved";
-    [cell.customImageView hy_setImageWithURLString:array[integer] placeHolder:nil options:HYImageDowloaderOptionRoundedRect |HYImageDowloaderOptionFadeAnimation withCompletionBlock:^(UIImage *image, NSError *error) {
+    [cell.customImageView hy_setImageWithURLString:array[integer] placeHolder:nil options:HYImageDownloaderOptionRoundedRect |HYImageDownloaderOptionFadeAnimation withCompletionBlock:^(UIImage *image, NSError *error) {
         if (image) {
             cell.markString = @"resolved";
    
@@ -178,7 +178,7 @@ didCompleteWithError:(nullable NSError *)error{
     CustomCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     NSInteger integer = indexPath.row % 7;
     cell.markString = @"unresolved";
-    [cell.customImageView hy_setImageWithURLString:array[integer] placeHolder:nil options:HYImageDowloaderOptionRoundedRect |HYImageDowloaderOptionFadeAnimation withCompletionBlock:^(UIImage *image, NSError *error) {
+    [cell.customImageView hy_setImageWithURLString:array[integer] placeHolder:nil options:HYImageDownloaderOptionRoundedRect |HYImageDownloaderOptionFadeAnimation withCompletionBlock:^(UIImage *image, NSError *error) {
         if (image) {
             cell.markString = @"resolved";
             
