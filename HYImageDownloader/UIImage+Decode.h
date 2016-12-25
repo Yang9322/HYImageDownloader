@@ -10,6 +10,6 @@
 
 @interface UIImage (Decode)
 
-- (instancetype)imageByDecoded;
+- (UIImage *)imageByDecoded;
 
 @end

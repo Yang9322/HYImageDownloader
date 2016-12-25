@@ -11,7 +11,7 @@
 @implementation UIImage (Decode)
 
 
-- (instancetype)imageByDecoded {
+- (UIImage *)imageByDecoded {
     CGImageRef imageRef = self.CGImage;
     if (!imageRef) return self;
     CGImageRef newImageRef = HYCGImageCreateDecodedCopy(imageRef);
@@ -39,7 +39,7 @@ CGImageRef HYCGImageCreateDecodedCopy(CGImageRef imageRef) {
         // BGRA8888 (premultiplied) or BGRX8888
         // same as UIGraphicsBeginImageContext() and -[UIView drawRect:]
         CGBitmapInfo bitmapInfo = kCGBitmapByteOrder32Host;
-        //attention:we use 'kCGImageAlphaPremultipliedFirst' maybe lose some details of image,but higher performance
+        //ATTENTION:if hasAlpha, we use 'kCGImageAlphaPremultipliedFirst' maybe lose some details of image,but higher performance
         bitmapInfo |= hasAlpha ? kCGImageAlphaPremultipliedFirst : kCGImageAlphaNoneSkipFirst;
         CGContextRef context = CGBitmapContextCreate(NULL, width, height, 8, 0, HYCGColorSpaceGetDeviceRGB(), bitmapInfo);
         if (!context) return NULL;
