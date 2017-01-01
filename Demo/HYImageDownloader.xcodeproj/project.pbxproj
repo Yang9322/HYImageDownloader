@@ -9,12 +9,15 @@
 /* Begin PBXBuildFile section */
 		3B2083E21CF041B400EB80D5 /* skin_top_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B2083E11CF041B400EB80D5 /* skin_top_background@2x.png */; };
 		3B2083E41CF04EBB00EB80D5 /* timeline_image_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B2083E31CF04EBB00EB80D5 /* timeline_image_placeholder.png */; };
-		3B25AA0D1E0E164000AC533B /* UIImage+Decode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B25AA0C1E0E164000AC533B /* UIImage+Decode.m */; };
-		3B45DBB21DFFA11A006691A4 /* HYCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B45DBB11DFFA11A006691A4 /* HYCacheManager.m */; };
 		3B4BED301E0CCBA30071FD72 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4BED2E1E0CCBA30071FD72 /* CustomCell.m */; };
 		3B4BED311E0CCBA30071FD72 /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B4BED2F1E0CCBA30071FD72 /* CustomCell.xib */; };
-		3BD8D0881E062E160058B665 /* HYMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD8D0871E062E160058B665 /* HYMemoryCache.m */; };
-		3BE5DC4C1D8801280065383B /* HYDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE5DC4B1D8801280065383B /* HYDiskCache.m */; };
+		3BCA23851E18AE1200077E97 /* HYCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCA23791E18AE1200077E97 /* HYCacheManager.m */; };
+		3BCA23861E18AE1200077E97 /* HYDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCA237B1E18AE1200077E97 /* HYDiskCache.m */; };
+		3BCA23871E18AE1200077E97 /* HYImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCA237D1E18AE1200077E97 /* HYImageDownloader.m */; };
+		3BCA23881E18AE1200077E97 /* HYMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCA237F1E18AE1200077E97 /* HYMemoryCache.m */; };
+		3BCA23891E18AE1200077E97 /* Images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3BCA23801E18AE1200077E97 /* Images.bundle */; };
+		3BCA238A1E18AE1200077E97 /* UIImage+Decode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCA23821E18AE1200077E97 /* UIImage+Decode.m */; };
+		3BCA238B1E18AE1200077E97 /* UIImageView+HYImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCA23841E18AE1200077E97 /* UIImageView+HYImageDownloader.m */; };
 		3BE5F2DC1CDB7980003617CE /* HYFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE5F2DB1CDB7980003617CE /* HYFPSLabel.m */; };
 		3BF37B031CD5DF96007F46AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37B021CD5DF96007F46AD /* main.m */; };
 		3BF37B061CD5DF96007F46AD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37B051CD5DF96007F46AD /* AppDelegate.m */; };
@@ -23,9 +26,6 @@
 		3BF37B0E1CD5DF96007F46AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37B0D1CD5DF96007F46AD /* Assets.xcassets */; };
 		3BF37B111CD5DF96007F46AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BF37B0F1CD5DF96007F46AD /* LaunchScreen.storyboard */; };
 		3BF37B1C1CD5DF96007F46AD /* HYImageDownloaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF37B1B1CD5DF96007F46AD /* HYImageDownloaderTests.m */; };
-		635BB6D11CF2B0630080B0D2 /* HYImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 635BB6CC1CF2B0630080B0D2 /* HYImageDownloader.m */; };
-		635BB6D21CF2B0630080B0D2 /* Images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 635BB6CD1CF2B0630080B0D2 /* Images.bundle */; };
-		635BB6D31CF2B0630080B0D2 /* UIImageView+HYImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 635BB6CF1CF2B0630080B0D2 /* UIImageView+HYImageDownloader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,17 +41,22 @@
 /* Begin PBXFileReference section */
 		3B2083E11CF041B400EB80D5 /* skin_top_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "skin_top_background@2x.png"; sourceTree = "<group>"; };
 		3B2083E31CF04EBB00EB80D5 /* timeline_image_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeline_image_placeholder.png; sourceTree = "<group>"; };
-		3B25AA0B1E0E164000AC533B /* UIImage+Decode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Decode.h"; sourceTree = "<group>"; };
-		3B25AA0C1E0E164000AC533B /* UIImage+Decode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Decode.m"; sourceTree = "<group>"; };
-		3B45DBB01DFFA11A006691A4 /* HYCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYCacheManager.h; sourceTree = "<group>"; };
-		3B45DBB11DFFA11A006691A4 /* HYCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYCacheManager.m; sourceTree = "<group>"; };
 		3B4BED2D1E0CCBA30071FD72 /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
 		3B4BED2E1E0CCBA30071FD72 /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
 		3B4BED2F1E0CCBA30071FD72 /* CustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
-		3BD8D0861E062E160058B665 /* HYMemoryCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYMemoryCache.h; sourceTree = "<group>"; };
-		3BD8D0871E062E160058B665 /* HYMemoryCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYMemoryCache.m; sourceTree = "<group>"; };
-		3BE5DC4A1D8801280065383B /* HYDiskCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYDiskCache.h; sourceTree = "<group>"; };
-		3BE5DC4B1D8801280065383B /* HYDiskCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYDiskCache.m; sourceTree = "<group>"; };
+		3BCA23781E18AE1200077E97 /* HYCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYCacheManager.h; sourceTree = "<group>"; };
+		3BCA23791E18AE1200077E97 /* HYCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYCacheManager.m; sourceTree = "<group>"; };
+		3BCA237A1E18AE1200077E97 /* HYDiskCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYDiskCache.h; sourceTree = "<group>"; };
+		3BCA237B1E18AE1200077E97 /* HYDiskCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYDiskCache.m; sourceTree = "<group>"; };
+		3BCA237C1E18AE1200077E97 /* HYImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYImageDownloader.h; sourceTree = "<group>"; };
+		3BCA237D1E18AE1200077E97 /* HYImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYImageDownloader.m; sourceTree = "<group>"; };
+		3BCA237E1E18AE1200077E97 /* HYMemoryCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYMemoryCache.h; sourceTree = "<group>"; };
+		3BCA237F1E18AE1200077E97 /* HYMemoryCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYMemoryCache.m; sourceTree = "<group>"; };
+		3BCA23801E18AE1200077E97 /* Images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "Images\U0010\U0010\U0010\U0010\U0010\U0010.bundle"; sourceTree = "<group>"; };
+		3BCA23811E18AE1200077E97 /* UIImage+Decode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Decode.h"; sourceTree = "<group>"; };
+		3BCA23821E18AE1200077E97 /* UIImage+Decode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Decode.m"; sourceTree = "<group>"; };
+		3BCA23831E18AE1200077E97 /* UIImageView+HYImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+HYImageDownloader.h"; sourceTree = "<group>"; };
+		3BCA23841E18AE1200077E97 /* UIImageView+HYImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+HYImageDownloader.m"; sourceTree = "<group>"; };
 		3BE5F2DA1CDB7980003617CE /* HYFPSLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYFPSLabel.h; sourceTree = "<group>"; };
 		3BE5F2DB1CDB7980003617CE /* HYFPSLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYFPSLabel.m; sourceTree = "<group>"; };
 		3BF37AFE1CD5DF96007F46AD /* HYImageDownloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HYImageDownloader.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,11 +72,6 @@
 		3BF37B171CD5DF96007F46AD /* HYImageDownloaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HYImageDownloaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BF37B1B1CD5DF96007F46AD /* HYImageDownloaderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HYImageDownloaderTests.m; sourceTree = "<group>"; };
 		3BF37B1D1CD5DF96007F46AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		635BB6CB1CF2B0630080B0D2 /* HYImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HYImageDownloader.h; path = HYImageDownloader/HYImageDownloader.h; sourceTree = "<group>"; };
-		635BB6CC1CF2B0630080B0D2 /* HYImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HYImageDownloader.m; path = HYImageDownloader/HYImageDownloader.m; sourceTree = "<group>"; };
-		635BB6CD1CF2B0630080B0D2 /* Images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "Images\U0010\U0010\U0010\U0010\U0010\U0010.bundle"; path = "HYImageDownloader/Images\U0010\U0010\U0010\U0010\U0010\U0010.bundle"; sourceTree = "<group>"; };
-		635BB6CE1CF2B0630080B0D2 /* UIImageView+HYImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+HYImageDownloader.h"; path = "HYImageDownloader/UIImageView+HYImageDownloader.h"; sourceTree = "<group>"; };
-		635BB6CF1CF2B0630080B0D2 /* UIImageView+HYImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+HYImageDownloader.m"; path = "HYImageDownloader/UIImageView+HYImageDownloader.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,10 +92,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3BCA23771E18AE1200077E97 /* HYImageDownloader */ = {
+			isa = PBXGroup;
+			children = (
+				3BCA23781E18AE1200077E97 /* HYCacheManager.h */,
+				3BCA23791E18AE1200077E97 /* HYCacheManager.m */,
+				3BCA237A1E18AE1200077E97 /* HYDiskCache.h */,
+				3BCA237B1E18AE1200077E97 /* HYDiskCache.m */,
+				3BCA237C1E18AE1200077E97 /* HYImageDownloader.h */,
+				3BCA237D1E18AE1200077E97 /* HYImageDownloader.m */,
+				3BCA237E1E18AE1200077E97 /* HYMemoryCache.h */,
+				3BCA237F1E18AE1200077E97 /* HYMemoryCache.m */,
+				3BCA23801E18AE1200077E97 /* Images.bundle */,
+				3BCA23811E18AE1200077E97 /* UIImage+Decode.h */,
+				3BCA23821E18AE1200077E97 /* UIImage+Decode.m */,
+				3BCA23831E18AE1200077E97 /* UIImageView+HYImageDownloader.h */,
+				3BCA23841E18AE1200077E97 /* UIImageView+HYImageDownloader.m */,
+			);
+			path = HYImageDownloader;
+			sourceTree = "<group>";
+		};
 		3BF37AF51CD5DF96007F46AD = {
 			isa = PBXGroup;
 			children = (
-				3BF37B001CD5DF96007F46AD /* HYImageDownloader */,
+				3BCA23771E18AE1200077E97 /* HYImageDownloader */,
+				3BF37B001CD5DF96007F46AD /* Demo */,
 				3BF37B1A1CD5DF96007F46AD /* HYImageDownloaderTests */,
 				3BF37AFF1CD5DF96007F46AD /* Products */,
 			);
@@ -110,7 +131,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3BF37B001CD5DF96007F46AD /* HYImageDownloader */ = {
+		3BF37B001CD5DF96007F46AD /* Demo */ = {
 			isa = PBXGroup;
 			children = (
 				3BF37B041CD5DF96007F46AD /* AppDelegate.h */,
@@ -122,7 +143,6 @@
 				3B4BED2F1E0CCBA30071FD72 /* CustomCell.xib */,
 				3BE5F2DA1CDB7980003617CE /* HYFPSLabel.h */,
 				3BE5F2DB1CDB7980003617CE /* HYFPSLabel.m */,
-				635BB6D41CF2B1180080B0D2 /* HYImageDownloader */,
 				3BF37B0A1CD5DF96007F46AD /* Main.storyboard */,
 				3B2083E31CF04EBB00EB80D5 /* timeline_image_placeholder.png */,
 				3B2083E11CF041B400EB80D5 /* skin_top_background@2x.png */,
@@ -131,6 +151,7 @@
 				3BF37B121CD5DF96007F46AD /* Info.plist */,
 				3BF37B011CD5DF96007F46AD /* Supporting Files */,
 			);
+			name = Demo;
 			path = HYImageDownloader;
 			sourceTree = "<group>";
 		};
@@ -149,26 +170,6 @@
 				3BF37B1D1CD5DF96007F46AD /* Info.plist */,
 			);
 			path = HYImageDownloaderTests;
-			sourceTree = "<group>";
-		};
-		635BB6D41CF2B1180080B0D2 /* HYImageDownloader */ = {
-			isa = PBXGroup;
-			children = (
-				3BD8D0861E062E160058B665 /* HYMemoryCache.h */,
-				3BD8D0871E062E160058B665 /* HYMemoryCache.m */,
-				3BE5DC4A1D8801280065383B /* HYDiskCache.h */,
-				3BE5DC4B1D8801280065383B /* HYDiskCache.m */,
-				3B45DBB01DFFA11A006691A4 /* HYCacheManager.h */,
-				3B45DBB11DFFA11A006691A4 /* HYCacheManager.m */,
-				635BB6CB1CF2B0630080B0D2 /* HYImageDownloader.h */,
-				635BB6CC1CF2B0630080B0D2 /* HYImageDownloader.m */,
-				635BB6CD1CF2B0630080B0D2 /* Images.bundle */,
-				635BB6CE1CF2B0630080B0D2 /* UIImageView+HYImageDownloader.h */,
-				635BB6CF1CF2B0630080B0D2 /* UIImageView+HYImageDownloader.m */,
-				3B25AA0B1E0E164000AC533B /* UIImage+Decode.h */,
-				3B25AA0C1E0E164000AC533B /* UIImage+Decode.m */,
-			);
-			name = HYImageDownloader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,13 +253,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BCA23891E18AE1200077E97 /* Images.bundle in Resources */,
 				3BF37B111CD5DF96007F46AD /* LaunchScreen.storyboard in Resources */,
 				3B2083E21CF041B400EB80D5 /* skin_top_background@2x.png in Resources */,
 				3B4BED311E0CCBA30071FD72 /* CustomCell.xib in Resources */,
 				3BF37B0E1CD5DF96007F46AD /* Assets.xcassets in Resources */,
 				3B2083E41CF04EBB00EB80D5 /* timeline_image_placeholder.png in Resources */,
 				3BF37B0C1CD5DF96007F46AD /* Main.storyboard in Resources */,
-				635BB6D21CF2B0630080B0D2 /* Images.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,17 +277,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3BE5DC4C1D8801280065383B /* HYDiskCache.m in Sources */,
-				3B45DBB21DFFA11A006691A4 /* HYCacheManager.m in Sources */,
-				3BD8D0881E062E160058B665 /* HYMemoryCache.m in Sources */,
+				3BCA23861E18AE1200077E97 /* HYDiskCache.m in Sources */,
+				3BCA23871E18AE1200077E97 /* HYImageDownloader.m in Sources */,
+				3BCA23881E18AE1200077E97 /* HYMemoryCache.m in Sources */,
 				3BF37B091CD5DF96007F46AD /* ViewController.m in Sources */,
+				3BCA238B1E18AE1200077E97 /* UIImageView+HYImageDownloader.m in Sources */,
+				3BCA23851E18AE1200077E97 /* HYCacheManager.m in Sources */,
 				3B4BED301E0CCBA30071FD72 /* CustomCell.m in Sources */,
-				635BB6D11CF2B0630080B0D2 /* HYImageDownloader.m in Sources */,
 				3BE5F2DC1CDB7980003617CE /* HYFPSLabel.m in Sources */,
 				3BF37B061CD5DF96007F46AD /* AppDelegate.m in Sources */,
-				635BB6D31CF2B0630080B0D2 /* UIImageView+HYImageDownloader.m in Sources */,
 				3BF37B031CD5DF96007F46AD /* main.m in Sources */,
-				3B25AA0D1E0E164000AC533B /* UIImage+Decode.m in Sources */,
+				3BCA238A1E18AE1200077E97 /* UIImage+Decode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
